@@ -1,3 +1,9 @@
+DELETE FROM user_followers WHERE true;
+DELETE FROM reaction WHERE true;
+DELETE FROM comment WHERE true;
+DELETE FROM post WHERE true;
+DELETE FROM user WHERE true;
+
 INSERT INTO user (firstname, lastname, bio, password, profile_picture, role, username)
 VALUES ('hellos', 'world', 'I was born in the dark', '$2a$10$2z77BnQL7IEkX6J8Rk7V8e0VCjDXigJoqWhhFi4HH/LZHOfxlJMAq',
         'https://via.placeholder.com/600/92c952', 'USER', 'hellos'),
@@ -29,7 +35,7 @@ VALUES
 INSERT INTO post (content, created_at, mediaurl, user_id)
 VALUES ('This is my first post!', NOW(), 'https://via.placeholder.com/600/92c952', 1),       -- John Doe's post
        ('Loving the weather today!', NOW(), 'https://via.placeholder.com/600/24f355', 2),    -- Jane Doe's post
-       ('Check out this beautiful view!', NOW(), 'https://via.placeholder.com/600/56a8c2', 3)-- Michael Smith's post
+       ('Check out this beautiful view!', NOW(), 'https://via.placeholder.com/600/56a8c2', 3),-- Michael Smith's post
     ('Check out this  view!', NOW(), 'https://via.placeholder.com/600/56a8c2', 4); -- Michael Smith's post
 
 

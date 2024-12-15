@@ -2,7 +2,6 @@ package com.bitsu.social_media.service;
 
 import com.bitsu.social_media.dto.CommentRequest;
 import com.bitsu.social_media.dto.CommentResponse;
-import com.bitsu.social_media.dto.PostCommentResponse;
 import com.bitsu.social_media.model.Comment;
 import com.bitsu.social_media.model.Post;
 import com.bitsu.social_media.model.User;
@@ -40,13 +39,13 @@ public class CommentService {
                 .build();
     }
 
-    public PostCommentResponse mapToPostCommentResponse(Comment comment) {
-        return PostCommentResponse.builder()
-                .Id(comment.getId())
-                .content(comment.getContent())
-                .createdAt(comment.getCreatedAt())
-                .build();
-    }
+//    public PostCommentResponse mapToPostCommentResponse(Comment comment) {
+//        return PostCommentResponse.builder()
+//                .Id(comment.getId())
+//                .content(comment.getContent())
+//                .createdAt(comment.getCreatedAt())
+//                .build();
+//    }
     public CommentResponse createComment(CommentRequest commentRequest) {
         User user = userService.getLoggedInUser();
 

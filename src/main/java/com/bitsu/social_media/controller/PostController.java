@@ -6,7 +6,6 @@ import com.bitsu.social_media.service.PostService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -36,6 +35,7 @@ public class PostController {
         log.info("Create: " + postRequest);
         return ResponseEntity.ok(postService.createPost(postRequest));
     }
+
 
     @DeleteMapping("/{id}")
     public void deletePost(

@@ -30,8 +30,6 @@ public class AuthService {
                 .lastname(request.getLastname())
                 .username(request.getUsername())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .bio(request.getBio())
-                .profilePicture(request.getProfilePic())
                 .role(Role.USER)
                 .build();
         user = userRepo.save(user);

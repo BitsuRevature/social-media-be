@@ -22,6 +22,6 @@ public class PostResponse {
     private String mediaURL;
     private LocalDateTime createdAt;
     private UserResponse user;
-    private List<PostCommentResponse> comments;
-    private List<PostReactionResponse> reactions;
+    private List<CommentResponse> comments;
+    private List<ReactionResponse> reactions;
 }

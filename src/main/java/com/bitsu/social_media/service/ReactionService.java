@@ -1,7 +1,6 @@
 package com.bitsu.social_media.service;
 
 
-import com.bitsu.social_media.dto.PostReactionResponse;
 import com.bitsu.social_media.dto.ReactionRequest;
 import com.bitsu.social_media.dto.ReactionResponse;
 import com.bitsu.social_media.model.Reaction;
@@ -35,13 +34,13 @@ public class ReactionService {
                 .build();
     }
 
-    public PostReactionResponse mapToPostReactionResponse(Reaction reaction) {
-        return PostReactionResponse.builder()
-                .id(reaction.getId())
-                .type(reaction.getType())
-                .build();
-    }
-
+//    public PostReactionResponse mapToPostReactionResponse(Reaction reaction) {
+//        return PostReactionResponse.builder()
+//                .id(reaction.getId())
+//                .type(reaction.getType())
+//                .build();
+//    }
+//
 
     public ReactionResponse createReaction(ReactionRequest reactionRequest) {
         var post = postRepo.findById(reactionRequest.getPostId())

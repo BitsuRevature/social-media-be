@@ -31,6 +31,7 @@ public class PostService {
                 .toList();
     }
 
+
     public PostResponse mapToPostResponse(Post post) {
 
         List<Comment> comments = post.getComments();
@@ -53,10 +54,10 @@ public class PostService {
                         )
                 )
                 .comments(
-                        comments.stream().map(commentService::mapToPostCommentResponse).toList()
+                        comments.stream().map(commentService::mapToCommentResponse).toList()
                 )
                 .reactions(
-                        reactions.stream().map(reactionService::mapToPostReactionResponse).toList()
+                        reactions.stream().map(reactionService::mapToReactionResponse).toList()
                 )
                 .build();
     }
