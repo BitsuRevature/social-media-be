@@ -23,5 +23,5 @@ public class PostResponse {
     private LocalDateTime createdAt;
     private UserResponse user;
     private List<CommentResponse> comments;
-    private List<ReactionResponse> reactions;
+    private List<Integer> reactions;
 }

@@ -54,4 +54,15 @@ public class PostController {
         log.info("Update: " + id + " " + postRequest);
         return ResponseEntity.ok(postService.updatePost(id, postRequest));
     }
+
+    @DeleteMapping("/reactions/{postId}")
+    public void deleteReactions(
+            @PathVariable int postId
+    ) {
+        log.info("Delete: " + postId);
+        postService.deleteReactions(postId);
+        ResponseEntity.ok();
+    }
+
+
 }

@@ -5,12 +5,11 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class PostRequest {
-        private String content;
-        private String mediaURL;
+public class UserPIInfo {
+    private  String firstname;
+    private  String lastname;
 }

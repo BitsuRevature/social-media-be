@@ -7,6 +7,7 @@ import com.bitsu.social_media.model.Post;
 import com.bitsu.social_media.model.Reaction;
 import com.bitsu.social_media.model.User;
 import com.bitsu.social_media.repository.PostRepo;
+import com.bitsu.social_media.repository.ReactionRepo;
 import com.bitsu.social_media.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,12 +22,11 @@ import java.util.List;
 public class PostService {
 
     private final PostRepo postRepo;
-    private final UserRepo userRepo;
     private final UserService userService;
     private final CommentService commentService;
-    private final ReactionService reactionService;
+    private  final ReactionRepo reactionRepo;
     public List<PostResponse> getPosts() {
-        return postRepo.findAll().stream()
+        return postRepo.findAllByOrderByCreatedAtDesc().stream()
                 .map(this::mapToPostResponse)
                 .toList();
     }
@@ -57,7 +57,7 @@ public class PostService {
                         comments.stream().map(commentService::mapToCommentResponse).toList()
                 )
                 .reactions(
-                        reactions.stream().map(reactionService::mapToReactionResponse).toList()
+                        reactions.stream().map(reaction -> reaction.getUser().getId()).toList()
                 )
                 .build();
     }
@@ -65,9 +65,6 @@ public class PostService {
     public PostResponse createPost(PostRequest postRequest) {
 
         User user = userService.getLoggedInUser();
-
-
-//        log.info(user.toString());
 
         Post post = Post.builder()
                 .content(postRequest.getContent())
@@ -90,4 +87,9 @@ public class PostService {
         return mapToPostResponse(postRepo.save(post));
     }
 
+    public void deleteReactions(int postId) {
+        User user = userService.getLoggedInUser();
+        Reaction reaction = reactionRepo.findByPostIdAndUserId(postId, user.getId()).orElseThrow(() -> new RuntimeException("Reaction not found"));
+        reactionRepo.delete(reaction);
+    }
 }
