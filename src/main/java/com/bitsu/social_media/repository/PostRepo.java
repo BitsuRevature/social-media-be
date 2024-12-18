@@ -11,4 +11,6 @@ public interface PostRepo extends JpaRepository<Post, Integer>{
 
     public List<Post> findAllByOrderByCreatedAtDesc();
 
+    public List<Post> findAllByContentContains(String search);
+
 }

@@ -24,9 +24,16 @@ public class PostService {
     private final PostRepo postRepo;
     private final UserService userService;
     private final CommentService commentService;
-    private  final ReactionRepo reactionRepo;
-    public List<PostResponse> getPosts() {
-        return postRepo.findAllByOrderByCreatedAtDesc().stream()
+    private final ReactionRepo reactionRepo;
+
+    public List<PostResponse> getPosts(String search) {
+        if (search == null || search.isBlank()) {
+            return postRepo.findAllByOrderByCreatedAtDesc().stream()
+                    .map(this::mapToPostResponse)
+                    .toList();
+        }
+
+        return postRepo.findAllByContentContains(search).stream()
                 .map(this::mapToPostResponse)
                 .toList();
     }
@@ -36,10 +43,10 @@ public class PostService {
 
         List<Comment> comments = post.getComments();
         List<Reaction> reactions = post.getReactions();
-        if(comments == null) {
+        if (comments == null) {
             comments = List.of();
         }
-        if(reactions == null) {
+        if (reactions == null) {
             reactions = List.of();
         }
 

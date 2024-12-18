@@ -22,9 +22,11 @@ public class PostController {
     private final PostService postService;
 
     @GetMapping
-    public ResponseEntity<List<PostResponse>> getPosts() {
+    public ResponseEntity<List<PostResponse>> getPosts(
+            @RequestParam String search
+    ) {
         log.info("Get: ");
-        return ResponseEntity.ok(postService.getPosts());
+        return ResponseEntity.ok(postService.getPosts(search));
     }
 
     @PostMapping
