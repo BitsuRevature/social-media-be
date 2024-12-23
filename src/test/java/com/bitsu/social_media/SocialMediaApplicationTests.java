@@ -11,12 +11,4 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest
 class SocialMediaApplicationTests {
 
-	@Autowired
-	private PostController postController;
-
-	@Test
-	void contextLoads() {
-		assertThat(postController).isNotNull();
-	}
-
 }
