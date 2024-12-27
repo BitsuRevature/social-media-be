@@ -1,4 +1,6 @@
 spring:
+  config:
+    import: env.properties
   application:
     name: social-media
 
@@ -6,7 +8,7 @@ spring:
     url: jdbc:mysql://localhost:3306/socialmedia
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: root
+    password: T:niuchaYL!2395
 
   jpa:
     hibernate:
@@ -25,3 +27,6 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+
+server:
+  port: 8000
