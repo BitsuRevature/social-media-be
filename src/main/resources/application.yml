@@ -3,22 +3,17 @@ spring:
     name: social-media
 
   datasource:
-    url: jdbc:mysql://localhost:3306/socialmedia
+    url: jdbc:mysql://rev-project-2-database.cpy400ikce24.us-east-2.rds.amazonaws.com:3306/rev_db
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: root
+    username: admin
+    password: kammYv-8xapja-tapdij
 
   jpa:
     hibernate:
       ddl-auto: update
     show-sql: true
-    properties:
-      hibernate:
-        format_sql: true
     database: mysql
-#  sql:
-#    init:
-#      mode: always
+    database-platform: org.hibernate.dialect.MySQLDialect
 
 springdoc:
   api-docs:
