@@ -47,6 +47,11 @@ jobs:
     - name: Checkout
       uses: actions/checkout@v4
 
+    - name: build
+      run: |
+        mvn clean
+        mvn -B package --file pom.xml
+
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
