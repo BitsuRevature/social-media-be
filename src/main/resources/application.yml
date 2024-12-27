@@ -5,10 +5,10 @@ spring:
     name: social-media
 
   datasource:
-    url: jdbc:mysql://localhost:3306/socialmedia
+    url: ${DB_DATABASE}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: root
-    password: T:niuchaYL!2395
+    username: ${DB_USER}
+    password: ${DB_PASSWORD}
 
   jpa:
     hibernate:
