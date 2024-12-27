@@ -1,6 +1,5 @@
 FROM openjdk:23
 
-COPY docker.aws.json /docker.aws.json
 
 ADD target/devops-integration.jar devops-integration.jar
 
