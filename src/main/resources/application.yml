@@ -1,13 +1,11 @@
 spring:
-  config:
-    import: env.properties
   application:
     name: social-media
 
   datasource:
-    url: ${DB_DATABASE}
+    url: jdbc:mysql://localhost:3306/socialmedia
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: ${DB_USER}
+    username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
   jpa:
