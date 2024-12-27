@@ -1,0 +1,10 @@
+com\bitsu\social_media\controller\CommentControllerTest.class
+com\bitsu\social_media\controller\AuthControllerTest.class
+com\bitsu\social_media\controller\PostControllerTest.class
+com\bitsu\social_media\service\ReactionServiceTest.class
+com\bitsu\social_media\controller\UserControllerTest.class
+com\bitsu\social_media\service\PostServiceTest.class
+com\bitsu\social_media\SocialMediaApplicationTests.class
+com\bitsu\social_media\service\AuthServiceTest.class
+com\bitsu\social_media\service\CommentServiceTest.class
+com\bitsu\social_media\controller\ReactionControllerTest.class
