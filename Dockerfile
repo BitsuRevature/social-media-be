@@ -1,7 +1,8 @@
 FROM openjdk:23
 
+WORKDIR /app
 
-ADD target/devops-integration.jar devops-integration.jar
+COPY target/devops-integration.jar /app/devops-integration.jar
 
 EXPOSE 8080
 
