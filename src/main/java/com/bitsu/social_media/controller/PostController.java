@@ -25,7 +25,7 @@ public class PostController {
     public ResponseEntity<List<PostResponse>> getPosts(
             @RequestParam String search
     ) {
-        log.info("Get: ");
+//        log.info("Get: ");
         return ResponseEntity.ok(postService.getPosts(search));
     }
 
