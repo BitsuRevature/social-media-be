@@ -8,7 +8,9 @@ services:
     ports:
       - "8000:8080"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+        restart: true
     environment:
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/socialmedia
       SPRING_DATASOURCE_USERNAME: root
@@ -22,3 +24,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: socialmedia
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
