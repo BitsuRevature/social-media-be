@@ -3,7 +3,7 @@ spring:
     name: social-media
 
   datasource:
-    url: jdbc:mysql://mysql-docker:3306/socialmedia
+    url: jdbc:mysql://db:3306/socialmedia
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: root
