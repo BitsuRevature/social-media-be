@@ -1,5 +1,4 @@
 HELP.md
-target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
@@ -37,3 +36,4 @@ env.properties
 .env
 env.properties
 PEM_FILE.pem
+/target
