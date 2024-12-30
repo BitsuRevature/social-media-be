@@ -5,7 +5,7 @@ pipeline {
         AWS_DEFAULT_REGION = 'us-east-2'
         AWS_ACCOUNT_ID = '339713008166'
         IMAGE_TAG = 'new-sm-img'
-	DOCKER_CREDENTIALS = credntials('docker-credentials')
+	    DOCKER_CREDENTIALS = credntials('docker-credentials')
        
     }
 
