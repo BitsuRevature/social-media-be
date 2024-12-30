@@ -36,3 +36,4 @@ env.properties
 .env
 env.properties
 PEM_FILE.pem
+/target
