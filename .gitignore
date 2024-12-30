@@ -35,3 +35,4 @@ env.properties
 .env.*
 .env
 env.properties
+PEM_FILE.pem

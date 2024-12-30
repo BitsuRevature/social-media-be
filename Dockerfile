@@ -4,7 +4,7 @@ FROM amazoncorretto:17-alpine-jdk
 WORKDIR /app
 
 # Copy the JAR file
-COPY target/social-media-0.0.1-SNAPSHOT.jar app.jar
+COPY target/devop-integration.jar app.jar
 
 # Expose the port
 EXPOSE 8080
