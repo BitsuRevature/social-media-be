@@ -1,8 +1,9 @@
 FROM openjdk:23
 
+WORKDIR /target
 
-ADD target/social-media-0.0.1-SNAPSHOT.jar.original social-media-0.0.1-SNAPSHOT.jar.original
+COPY target/social-media-0.0.1-SNAPSHOT.jar social-media-be-devops.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "/social-media-0.0.1-SNAPSHOT.jar.original"]
+ENTRYPOINT ["java", "-jar", "/target/social-media-be-devops.jar"]
