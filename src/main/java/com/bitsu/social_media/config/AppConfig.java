@@ -2,6 +2,12 @@ package com.bitsu.social_media.config;
 
 import com.bitsu.social_media.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.presigner.S3Presigner;
+
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -16,8 +22,15 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @RequiredArgsConstructor
 public class AppConfig {
-    private final UserRepo userRepo;
 
+    @Value("${aws.accessKeyId}")
+    String accessKeyId;
+
+    @Value("${aws.secretAccessKey}")
+    String secretAccessKey;
+
+    private final UserRepo userRepo;
+    
     @Bean
     public UserDetailsService userDetailsService() {
         return username -> {
@@ -43,6 +56,14 @@ public class AppConfig {
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
+    }
+
+    @Bean
+    public S3Presigner s3Presigner() {
+        return S3Presigner.builder()
+            .region(Region.US_EAST_2)
+            .credentialsProvider(StaticCredentialsProvider.create(AwsBasicCredentials.create(accessKeyId, secretAccessKey)))
+            .build();
     }
 
 }
