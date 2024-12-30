@@ -1,9 +1,14 @@
-FROM openjdk:23
+FROM amazoncorretto:17-alpine-jdk
 
-WORKDIR /target
+# Set the working directory
+WORKDIR /app
 
-COPY target/social-media-0.0.1-SNAPSHOT.jar social-media-be-devops.jar
+# Copy the JAR file
+COPY target/devop-integration.jar app.jar
 
+# Expose the port
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "/target/social-media-be-devops.jar"]
+# Set the entrypoint
+ENTRYPOINT ["java", "-jar", "/app/app.jar"]
+

@@ -2,7 +2,7 @@ HELP.md
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**/target/
 !**/src/test/**/target/
-/target
+env.properties
 
 ### STS ###
 .apt_generated
@@ -31,5 +31,8 @@ build/
 
 ### VS Code ###
 .vscode/
-
-### testing webhook again
+env.properties
+.env.*
+.env
+env.properties
+PEM_FILE.pem

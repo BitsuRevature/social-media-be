@@ -42,7 +42,6 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
@@ -78,7 +77,12 @@
       		<groupId>org.springdoc</groupId>
       		<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
       		<version>2.7.0</version>
-   		</dependency>
+		</dependency>
+		<dependency>
+			<groupId>software.amazon.awssdk</groupId>
+			<artifactId>s3</artifactId>
+			<version>2.20.104</version>
+		</dependency>
 	</dependencies>
 
 	<build>
@@ -108,6 +112,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>devop-integration</finalName>
 	</build>
 
 </project>

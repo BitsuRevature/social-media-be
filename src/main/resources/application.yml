@@ -1,12 +1,16 @@
 spring:
+  config:
+    import: env.properties
+
   application:
     name: social-media
 
   datasource:
-    url: jdbc:mysql://rev-project-2-database.cpy400ikce24.us-east-2.rds.amazonaws.com:3306/rev_db
+    url: ${SPRING_DATASOURCE_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: admin
-    password: kammYv-8xapja-tapdij
+    username: ${SPRING_DATASOURCE_USERNAME}
+    password: ${SPRING_DATASOURCE_PASSWORD}
+
 
   jpa:
     hibernate:
@@ -20,3 +24,9 @@ springdoc:
     path: /v3/api-docs
   swagger-ui:
     path: /swagger-ui.html
+
+aws:
+  config:
+    import: env.properties
+  accessKeyId: ${AWS_ACCESS_KEY_ID}
+  secretAccessKey: ${AWS_SECRET_ACCESS_KEY}
