@@ -1,6 +1,5 @@
 package com.bitsu.social_media.service;
 
-import com.bitsu.social_media.model.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
