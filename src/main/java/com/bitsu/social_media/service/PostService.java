@@ -8,10 +8,9 @@ import com.bitsu.social_media.model.Reaction;
 import com.bitsu.social_media.model.User;
 import com.bitsu.social_media.repository.PostRepo;
 import com.bitsu.social_media.repository.ReactionRepo;
-import com.bitsu.social_media.repository.UserRepo;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.context.SecurityContextHolder;
+
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -25,6 +24,7 @@ public class PostService {
     private final UserService userService;
     private final CommentService commentService;
     private final ReactionRepo reactionRepo;
+    private final S3Service s3Service;
 
     public List<PostResponse> getPosts(String search) {
         if (search == null || search.isBlank()) {
@@ -84,7 +84,10 @@ public class PostService {
     public void deletePost(int id) {
         log.info("Delete: " + id);
         Post post = postRepo.findById(id).orElseThrow(() -> new RuntimeException("Post not found"));
-        postRepo.delete(post);
+        boolean imageDeleted = s3Service.deleteImageFromBucket(post.getMediaURL());
+        if (imageDeleted) {
+            postRepo.delete(post);
+        }
     }
 
     public PostResponse updatePost(int id, PostRequest postRequest) {
