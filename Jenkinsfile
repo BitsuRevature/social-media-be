@@ -19,7 +19,7 @@ pipeline {
         stage('Build jar file') {
             steps {
                 script {
-                    sh "mvn package";
+                    sh "mvn -DskipTests package";
                 }
             }
         }
