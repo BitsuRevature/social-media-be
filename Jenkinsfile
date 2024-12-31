@@ -18,9 +18,12 @@ pipeline {
         }
         
         stage('Set Environment'){
-            withCredentials([file(credentialsId: "env-properties", variable: 'secrets')]){
-                sh "cp ${secrets} /workspace/social-media-be2"
+            steps {
+                withCredentials([file(credentialsId: "env-properties", variable: 'secrets')]){
+                    sh "cp ${secrets} /workspace/social-media-be2"
+                    }
             }
+            
         }
 
         stage('Build jar file') {
