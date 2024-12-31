@@ -20,8 +20,8 @@ pipeline {
         stage('Set Environment'){
             steps {
                 withCredentials([file(credentialsId: "env-properties", variable: 'secrets')]){
-                    sh "cp ${secrets} /workspace/social-media-be2"
                     sh "echo pwd"
+                    sh "cp ${secrets} /workspace/social-media-be2"
                     }
             }
             
