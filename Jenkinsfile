@@ -20,7 +20,6 @@ pipeline {
         stage('Set Environment'){
             steps {
                 withCredentials([file(credentialsId: "env-properties", variable: 'secrets')]){
-                    sh "pwd"
                     sh "cp ${secrets} /ec2-user/var/Jenkins/workspace/social-media-be2/src/main/resources"
                     }
             }
