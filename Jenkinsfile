@@ -37,9 +37,9 @@ pipeline {
             steps {
                 script {
                     sh "docker build -t be_test .";
-                    sh "docker tag be_test:latest aodonovan/social-media-be-docker-repo:latest";
+                    sh "docker tag be_test:latest liamfrager/revature-project-2-be:latest";
                     sh "echo ${DOCKER_CREDENTIALS_PSW}| docker login --username ${DOCKER_CREDENTIALS_USR} --password-stdin"
-                    sh "docker push aodonovan/social-media-be-docker-repo:latest"
+                    sh "docker push liamfrager/revature-project-2-be:latest"
                 }
             }
         }
@@ -47,8 +47,8 @@ pipeline {
             steps {
                 script {
                     sh "ssh -i /ec2-user/var/Jenkins/docker-container-instance-key.pem ec2-user@ec2-3-143-226-151.us-east-2.compute.amazonaws.com -y";
-                    sh "sudo docker image pull aodonovan/social-media-be-docker-repo:latest";
-                    sh "docker run -d aodonovan/social-media-be-docker-repo";
+                    sh "sudo docker image pull liamfrager/revature-project-2-be:latest";
+                    sh "docker run -d liamfrager/revature-project-2-be";
                     sh "exit"
                 }
             }
