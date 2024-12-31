@@ -21,10 +21,9 @@ pipeline {
             steps {
                 withCredentials([file(credentialsId: "env-properties", variable: 'secrets')]){
                     sh "pwd"
-                    sh "cp ${secrets} /workspace/social-media-be2"
+                    sh "cp ${secrets} /ec2-user/var/Jenkins/workspace/social-media-be2/src/main/resources"
                     }
             }
-            
         }
 
         stage('Build jar file') {
