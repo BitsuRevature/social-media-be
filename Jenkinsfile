@@ -43,7 +43,7 @@ pipeline {
                 }
             }
         }
-        stage('Remote into docker runner ec2, pull and run image') {
+        /* stage('Remote into docker runner ec2, pull and run image') {
             steps {
                 script {
                     sh "ssh -i /ec2-user/var/Jenkins/docker-container-instance-key.pem ec2-user@ec2-3-143-226-151.us-east-2.compute.amazonaws.com -y";
@@ -52,6 +52,6 @@ pipeline {
                     sh "logout"
                 }
             }
-        }
+        } */
     }
 }
