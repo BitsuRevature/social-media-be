@@ -14,10 +14,15 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 checkout scm
-                sh "cp ${ENV_PROPERTIES_FILE} workspace/src/main/resources/env.properties"
             }
         }
         
+        stage('Set Environment'){
+            withCredentials([file(credentialsId: "env-properties", variable: 'secrets')]){
+                sh "cp ${secrets} /workspace/social-media-be2"
+            }
+        }
+
         stage('Build jar file') {
             steps {
                 script {
