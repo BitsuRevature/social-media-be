@@ -1,7 +1,4 @@
 spring:
-  # config:
-  #   import: env.properties
-
   application:
     name: social-media
 
