@@ -42,6 +42,7 @@ pipeline {
                     sh "docker push aodonovan/social-media-be-docker-repo:latest"
                 }
             }
+        }
         stage('Remote into docker runner ec2, pull and run image') {
             steps {
                 script {
