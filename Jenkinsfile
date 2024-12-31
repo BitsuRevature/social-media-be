@@ -49,6 +49,7 @@ pipeline {
                     sh "ssh -i ./docker-container-instance-key.pem ec2-user@ec2-3-143-226-151.us-east-2.compute.amazonaws.com -v";
                     sh "sudo docker image pull aodonovan/social-media-be-docker-repo:latest";
                     sh "docker run aodonovan/social-media-be-docker-repo";
+                    sh "logout"
                 }
             }
         }
