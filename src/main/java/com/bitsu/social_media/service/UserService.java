@@ -34,7 +34,7 @@ public class UserService {
                         .getAuthentication()
                         .getPrincipal()
                 ).getUsername()
-        ).orElseThrow(() -> new RuntimeException("User not found"));
+        ).orElseThrow(() -> new RuntimeException("User not found ** change for testing webhook **"));
     }
 
     public void updatePI(UserPIInfo userPIInfo) {
