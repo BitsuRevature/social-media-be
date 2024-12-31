@@ -6,6 +6,7 @@ pipeline {
         AWS_ACCOUNT_ID = '339713008166'
         IMAGE_TAG = 'new-sm-img-22time'
 	    DOCKER_CREDENTIALS = credentials('docker-credentials')
+        ENV_PROPERTIES_FILE = credentials('env-properties')
        
     }
 
@@ -13,6 +14,7 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 checkout scm
+                sh "cp ${ENV_PROPERTIES_FILE} workspace/src/main/resources/env.properties"
             }
         }
         
