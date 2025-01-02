@@ -17,6 +17,7 @@ import java.util.List;
 public class UserService {
 
     private final UserRepo userRepo;
+    private final S3Service s3Service;
 
     public UserResponse mapToUserResponse(User user) {
         return UserResponse.builder()
@@ -52,6 +53,7 @@ public class UserService {
 
     public void updateProfilePic(UserProfilePic userProfilePic) {
         User user = getLoggedInUser();
+        s3Service.deleteImageFromBucket(userProfilePic.getProfilePicture());
         user.setProfilePicture(userProfilePic.getProfilePicture());
         userRepo.save(user);
     }
