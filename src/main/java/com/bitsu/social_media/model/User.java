@@ -27,21 +27,28 @@ public class User implements UserDetails {
             unique = true
     )
     private String username;
+
     private String firstname;
     private String lastname;
     private String password;
     private String profilePicture;
     private String bio;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(
+            fetch = FetchType.LAZY, cascade = CascadeType.ALL
+    )
     @JoinColumn(name = "user_id")
     private List<Post> posts;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(
+            fetch = FetchType.LAZY, cascade = CascadeType.ALL
+    )
     @JoinColumn(name = "user_id")
     private List<Comment> comments;
 
-    @OneToMany(fetch = FetchType.LAZY)
+    @OneToMany(
+            fetch = FetchType.LAZY, cascade = CascadeType.ALL
+    )
     @JoinColumn(name = "user_id")
     private List<Reaction> reactions;
 
