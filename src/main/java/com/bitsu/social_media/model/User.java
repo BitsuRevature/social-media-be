@@ -35,19 +35,19 @@ public class User implements UserDetails {
     private String bio;
 
     @OneToMany(
-            fetch = FetchType.LAZY, cascade = CascadeType.ALL
+            fetch = FetchType.LAZY, cascade = CascadeType.REMOVE
     )
     @JoinColumn(name = "user_id")
     private List<Post> posts;
 
     @OneToMany(
-            fetch = FetchType.LAZY, cascade = CascadeType.ALL
+            fetch = FetchType.LAZY, cascade = CascadeType.REMOVE
     )
     @JoinColumn(name = "user_id")
     private List<Comment> comments;
 
     @OneToMany(
-            fetch = FetchType.LAZY, cascade = CascadeType.ALL
+            fetch = FetchType.LAZY, cascade = CascadeType.REMOVE
     )
     @JoinColumn(name = "user_id")
     private List<Reaction> reactions;
