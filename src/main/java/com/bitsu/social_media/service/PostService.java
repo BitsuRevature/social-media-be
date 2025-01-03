@@ -8,6 +8,7 @@ import com.bitsu.social_media.model.Reaction;
 import com.bitsu.social_media.model.User;
 import com.bitsu.social_media.repository.PostRepo;
 import com.bitsu.social_media.repository.ReactionRepo;
+import com.bitsu.social_media.utility.Utility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -25,6 +26,7 @@ public class PostService {
     private final CommentService commentService;
     private final ReactionRepo reactionRepo;
     private final S3Service s3Service;
+    private final Utility utility;
 
     public List<PostResponse> getPosts(String search) {
         if (search == null || search.isBlank()) {
@@ -71,7 +73,7 @@ public class PostService {
 
     public PostResponse createPost(PostRequest postRequest) {
 
-        User user = userService.getLoggedInUser();
+        User user = utility.getLoggedInUser();
 
         Post post = Post.builder()
                 .content(postRequest.getContent())
@@ -98,7 +100,7 @@ public class PostService {
     }
 
     public void deleteReactions(int postId) {
-        User user = userService.getLoggedInUser();
+        User user = utility.getLoggedInUser();
         Reaction reaction = reactionRepo.findByPostIdAndUserId(postId, user.getId()).orElseThrow(() -> new RuntimeException("Reaction not found"));
         reactionRepo.delete(reaction);
     }
