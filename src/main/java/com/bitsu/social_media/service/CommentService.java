@@ -7,6 +7,7 @@ import com.bitsu.social_media.model.Post;
 import com.bitsu.social_media.model.User;
 import com.bitsu.social_media.repository.CommentRepo;
 import com.bitsu.social_media.repository.PostRepo;
+import com.bitsu.social_media.utility.Utility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +19,7 @@ public class CommentService {
     private final UserService userService;
     private final CommentRepo commentRepo;
     private final PostRepo postRepo;
+    private final Utility utility;
     public List<CommentResponse> getComments() {
         return commentRepo.findAll().stream()
                 .map(this::mapToCommentResponse)
@@ -45,7 +47,7 @@ public class CommentService {
 //                .build();
 //    }
     public CommentResponse createComment(CommentRequest commentRequest) {
-        User user = userService.getLoggedInUser();
+        User user = utility.getLoggedInUser();
 
         Post post = postRepo.findById(commentRequest.getPostId())
                 .orElseThrow(() -> new RuntimeException("Post not found"));
