@@ -8,7 +8,6 @@ import com.bitsu.social_media.model.User;
 import com.bitsu.social_media.repository.UserRepo;
 import com.bitsu.social_media.utility.Utility;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -45,9 +44,10 @@ public class UserService {
 
     public void updateProfilePic(UserProfilePic userProfilePic) {
         User user = utility.getLoggedInUser();
-        s3Service.deleteImageFromBucket(userProfilePic.getProfilePicture());
-        user.setProfilePicture(userProfilePic.getProfilePicture());
-        userRepo.save(user);
+        if (s3Service.deleteImageFromBucket(user.getProfilePicture())) {
+            user.setProfilePicture(userProfilePic.getProfilePicture());
+            userRepo.save(user);
+        }
     }
 
     public List<UserResponse> getUsers(String search) {
