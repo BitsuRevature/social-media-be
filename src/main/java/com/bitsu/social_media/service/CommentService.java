@@ -21,7 +21,7 @@ public class CommentService {
     private final PostRepo postRepo;
     private final Utility utility;
     public List<CommentResponse> getComments() {
-        return commentRepo.findAll().stream()
+        return commentRepo.findAllByOrderByCreatedAtDesc().stream()
                 .map(this::mapToCommentResponse)
                 .toList();
     }
