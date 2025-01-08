@@ -1,6 +1,7 @@
 package com.bitsu.social_media.repository;
 
 import com.bitsu.social_media.model.Post;
+import com.bitsu.social_media.model.User;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -18,5 +19,7 @@ public interface PostRepo extends JpaRepository<Post, Integer>{
 
     @Query("SELECT p FROM Post p WHERE p.user.id IN :following")
     List<Post> findPostsByFollowing(@Param("following") List<Integer> following);
+
+    public List<Post> findAllByUser(User user);
 
 }

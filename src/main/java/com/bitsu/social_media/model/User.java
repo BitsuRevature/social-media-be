@@ -9,6 +9,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import java.util.Collection;
 import java.util.List;
 
@@ -38,6 +40,7 @@ public class User implements UserDetails {
             fetch = FetchType.LAZY, cascade = CascadeType.REMOVE
     )
     @JoinColumn(name = "user_id")
+    @JsonManagedReference
     private List<Post> posts;
 
     @OneToMany(
