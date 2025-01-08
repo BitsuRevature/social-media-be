@@ -20,5 +20,5 @@ public class UserProfileResponse {
     private String username;
     private String bio;
     private String profilePicture;
-    private List<Post> posts;
+    private List<PostResponse> posts;
 }
