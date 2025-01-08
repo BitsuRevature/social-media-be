@@ -86,10 +86,10 @@ public class PostService {
     public void deletePost(int id) {
         log.info("Delete: " + id);
         Post post = postRepo.findById(id).orElseThrow(() -> new RuntimeException("Post not found"));
-        boolean imageDeleted = s3Service.deleteImageFromBucket(post.getMediaURL());
-        if (imageDeleted) {
-            postRepo.delete(post);
+        if(post.getMediaURL() != null && !post.getMediaURL.isBlank()){
+            s3Service.deleteImageFromBucket(post.getMediaURL());
         }
+        postRepo.delete(post);
     }
 
     public PostResponse updatePost(int id, PostRequest postRequest) {
