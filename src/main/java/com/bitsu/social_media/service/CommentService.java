@@ -22,22 +22,11 @@ public class CommentService {
     private final Utility utility;
     public List<CommentResponse> getComments() {
         return commentRepo.findAllByOrderByCreatedAtDesc().stream()
-                .map(this::mapToCommentResponse)
+                .map(utility::mapToCommentResponse)
                 .toList();
     }
 
-    public CommentResponse mapToCommentResponse(Comment comment) {
-        return CommentResponse.builder()
-                .Id(comment.getId())
-                .content(comment.getContent())
-                .createdAt(comment.getCreatedAt())
-                .user(
-                        userService.mapToUserResponse(
-                                comment.getUser()
-                        )
-                )
-                .build();
-    }
+
 
 //    public PostCommentResponse mapToPostCommentResponse(Comment comment) {
 //        return PostCommentResponse.builder()
@@ -58,7 +47,7 @@ public class CommentService {
                 .post(post)
                 .build();
         comment = commentRepo.save(comment);
-        return mapToCommentResponse(comment);
+        return utility.mapToCommentResponse(comment);
     }
 
     public void deleteComment(int id) {
@@ -72,6 +61,6 @@ public class CommentService {
                 .orElseThrow(() -> new RuntimeException("Comment not found"));
         comment.setContent(commentRequest.getContent());
         comment = commentRepo.save(comment);
-        return mapToCommentResponse(comment);
+        return utility.mapToCommentResponse(comment);
     }
 }
