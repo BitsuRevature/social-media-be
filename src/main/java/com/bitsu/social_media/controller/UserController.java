@@ -4,6 +4,7 @@ package com.bitsu.social_media.controller;
 import com.bitsu.social_media.dto.UserBioInfo;
 import com.bitsu.social_media.dto.UserPIInfo;
 import com.bitsu.social_media.dto.UserProfilePic;
+import com.bitsu.social_media.dto.UserProfileResponse;
 import com.bitsu.social_media.dto.UserResponse;
 import com.bitsu.social_media.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +28,13 @@ public class UserController {
             @RequestParam String search
     ) {
         return ResponseEntity.ok(userService.getUsers(search));
+    }
+
+    @GetMapping("/{username}")
+    public ResponseEntity<UserProfileResponse> getUser(
+            @PathVariable String username
+    ) {
+        return ResponseEntity.ok(userService.getUser(username));
     }
 
     @GetMapping("following")

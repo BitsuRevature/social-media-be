@@ -3,13 +3,16 @@ package com.bitsu.social_media.service;
 import com.bitsu.social_media.dto.UserBioInfo;
 import com.bitsu.social_media.dto.UserPIInfo;
 import com.bitsu.social_media.dto.UserProfilePic;
+import com.bitsu.social_media.dto.UserProfileResponse;
 import com.bitsu.social_media.dto.UserResponse;
+import com.bitsu.social_media.model.Post;
 import com.bitsu.social_media.model.User;
 import com.bitsu.social_media.repository.UserRepo;
 import com.bitsu.social_media.utility.Utility;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -48,6 +51,21 @@ public class UserService {
             user.setProfilePicture(userProfilePic.getProfilePicture());
             userRepo.save(user);
         }
+    }
+
+    public UserProfileResponse getUser(String username) {
+        User user = userRepo.findByUsername(username).get();
+        List<Post> posts = user.getPosts();
+        Collections.reverse(posts);
+        return UserProfileResponse.builder()
+            .id(user.getId())
+            .firstname(user.getFirstname())
+            .lastname(user.getLastname())
+            .username(user.getUsername())
+            .bio(user.getBio())
+            .profilePicture(user.getProfilePicture())
+            .posts(posts)
+            .build();
     }
 
     public List<UserResponse> getUsers(String search) {

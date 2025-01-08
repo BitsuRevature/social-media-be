@@ -6,6 +6,8 @@ import java.util.List;
 import jakarta.persistence.*;
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,6 +32,7 @@ public class Post {
     private LocalDateTime createdAt;
 
     @ManyToOne
+    @JsonBackReference
     private User user;
 
     @OneToMany(
