@@ -36,6 +36,13 @@ public class UserController {
         return ResponseEntity.ok(userService.getFollowing(search));
     }
 
+    @GetMapping("followers")
+    public ResponseEntity<List<UserResponse>> getFollowers(
+            @RequestParam String search
+    ) {
+        return ResponseEntity.ok(userService.getFollowers(search));
+    }
+
     @PutMapping("/PI")
     public void updatePI(@RequestBody UserPIInfo userPIInfo) {
         log.error("Update: " + userPIInfo);

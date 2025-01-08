@@ -53,7 +53,7 @@ public class User implements UserDetails {
     private List<Reaction> reactions;
 
     @ManyToMany
-    private List<User> followers;
+    private List<User> following;
 
     @Enumerated(EnumType.STRING)
     private Role role;

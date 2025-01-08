@@ -40,6 +40,21 @@ public class PostService {
                 .toList();
     }
 
+    public List<PostResponse> getFeed(String search) {
+        if (search == null || search.isBlank()) {
+            return postRepo.findPostsByFollowing(utility.getLoggedInUser().getFollowing().stream().map(user -> user.getId()).toList())
+                    .stream()
+                    .map(this::mapToPostResponse)
+                    .toList();
+        }
+
+        return postRepo.findPostsByFollowing(utility.getLoggedInUser().getFollowing().stream().map(user -> user.getId()).toList())
+                .stream()
+                .filter(post -> post.getContent().contains(search))
+                .map(this::mapToPostResponse)
+                .toList();
+    }
+
 
     public PostResponse mapToPostResponse(Post post) {
 

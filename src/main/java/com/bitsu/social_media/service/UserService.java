@@ -63,11 +63,23 @@ public class UserService {
 
     public List<UserResponse> getFollowing(String search) {
         if (search == null || search.isBlank()) {
-            return utility.getLoggedInUser().getFollowers().stream()
+            return utility.getLoggedInUser().getFollowing().stream()
                     .map(this::mapToUserResponse)
                     .toList();
         }
-        return utility.getLoggedInUser().getFollowers().stream()
+        return utility.getLoggedInUser().getFollowing().stream()
+                .filter(user -> user.getUsername().contains(search))
+                .map(this::mapToUserResponse)
+                .toList();
+    }
+
+    public List<UserResponse> getFollowers(String search) {
+        if (search == null || search.isBlank()) {
+            return userRepo.findFollowers(utility.getLoggedInUser().getId()).stream()
+                .map(this::mapToUserResponse)
+                .toList();
+        }
+        return userRepo.findFollowers(utility.getLoggedInUser().getId()).stream()
                 .filter(user -> user.getUsername().contains(search))
                 .map(this::mapToUserResponse)
                 .toList();
@@ -76,14 +88,14 @@ public class UserService {
     public void unfollow(int id) {
         User user = utility.getLoggedInUser();
         User userToUnfollow = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User to unfollow not found"));
-        user.getFollowers().remove(userToUnfollow);
+        user.getFollowing().remove(userToUnfollow);
         userRepo.save(user);
     }
 
     public void follow(int id) {
         User user = utility.getLoggedInUser();
         User userToFollow = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User to follow not found"));
-        user.getFollowers().add(userToFollow);
+        user.getFollowing().add(userToFollow);
         userRepo.save(user);
     }
 }
