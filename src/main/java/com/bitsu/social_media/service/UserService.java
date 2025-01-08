@@ -48,7 +48,6 @@ public class UserService {
 
     public UserProfileResponse getUser(String username) {
         User user = userRepo.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
-        log.info("User SERVICE: " + user);
         List<Post> posts = user.getPosts();
         Collections.reverse(posts);
         return UserProfileResponse.builder()

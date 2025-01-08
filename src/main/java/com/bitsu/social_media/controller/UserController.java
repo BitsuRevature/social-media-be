@@ -35,7 +35,6 @@ public class UserController {
             @PathVariable String username
     ) {
         var user = userService.getUser(username);
-        log.info("User: " + user);
         return ResponseEntity.ok(user);
     }
 
