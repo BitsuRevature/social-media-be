@@ -55,7 +55,6 @@ public class PostService {
                 .toList();
     }
 
-
     public PostResponse mapToPostResponse(Post post) {
 
         List<Comment> comments = post.getComments();
@@ -74,15 +73,11 @@ public class PostService {
                 .createdAt(post.getCreatedAt())
                 .user(
                         userService.mapToUserResponse(
-                                post.getUser()
-                        )
-                )
+                                post.getUser()))
                 .comments(
-                        comments.stream().map(commentService::mapToCommentResponse).toList()
-                )
+                        comments.stream().map(commentService::mapToCommentResponse).toList())
                 .reactions(
-                        reactions.stream().map(reaction -> reaction.getUser().getId()).toList()
-                )
+                        reactions.stream().map(reaction -> reaction.getUser().getId()).toList())
                 .build();
     }
 
@@ -101,7 +96,7 @@ public class PostService {
     public void deletePost(int id) {
         log.info("Delete: " + id);
         Post post = postRepo.findById(id).orElseThrow(() -> new RuntimeException("Post not found"));
-        if(post.getMediaURL() != null && !post.getMediaURL.isBlank()){
+        if (post.getMediaURL() != null && !post.getMediaURL().isBlank()) {
             s3Service.deleteImageFromBucket(post.getMediaURL());
         }
         postRepo.delete(post);
@@ -116,7 +111,8 @@ public class PostService {
 
     public void deleteReactions(int postId) {
         User user = utility.getLoggedInUser();
-        Reaction reaction = reactionRepo.findByPostIdAndUserId(postId, user.getId()).orElseThrow(() -> new RuntimeException("Reaction not found"));
+        Reaction reaction = reactionRepo.findByPostIdAndUserId(postId, user.getId())
+                .orElseThrow(() -> new RuntimeException("Reaction not found"));
         reactionRepo.delete(reaction);
     }
 }
