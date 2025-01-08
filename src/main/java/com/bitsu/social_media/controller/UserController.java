@@ -34,7 +34,9 @@ public class UserController {
     public ResponseEntity<UserProfileResponse> getUser(
             @PathVariable String username
     ) {
-        return ResponseEntity.ok(userService.getUser(username));
+        var user = userService.getUser(username);
+        log.info("User: " + user);
+        return ResponseEntity.ok(user);
     }
 
     @GetMapping("following")

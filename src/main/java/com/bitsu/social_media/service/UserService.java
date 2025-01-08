@@ -10,6 +10,7 @@ import com.bitsu.social_media.model.User;
 import com.bitsu.social_media.repository.UserRepo;
 import com.bitsu.social_media.utility.Utility;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -17,21 +18,12 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserService {
 
     private final UserRepo userRepo;
     private final S3Service s3Service;
     private final Utility utility;
-
-    public UserResponse mapToUserResponse(User user) {
-        return UserResponse.builder()
-                .Id(user.getId())
-                .username(user.getUsername())
-                .bio(user.getBio())
-                .profilePicture(user.getProfilePicture())
-                .build();
-    }
-
     public void updatePI(UserPIInfo userPIInfo) {
         User user = utility.getLoggedInUser();
         user.setFirstname(userPIInfo.getFirstname());
@@ -47,14 +39,16 @@ public class UserService {
 
     public void updateProfilePic(UserProfilePic userProfilePic) {
         User user = utility.getLoggedInUser();
-        if (s3Service.deleteImageFromBucket(user.getProfilePicture())) {
+        if(userProfilePic.getProfilePicture() != null && !userProfilePic.getProfilePicture().isBlank()){
+            s3Service.deleteImageFromBucket(user.getProfilePicture());
             user.setProfilePicture(userProfilePic.getProfilePicture());
-            userRepo.save(user);
         }
+        userRepo.save(user);
     }
 
     public UserProfileResponse getUser(String username) {
-        User user = userRepo.findByUsername(username).get();
+        User user = userRepo.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        log.info("User SERVICE: " + user);
         List<Post> posts = user.getPosts();
         Collections.reverse(posts);
         return UserProfileResponse.builder()
@@ -64,42 +58,42 @@ public class UserService {
             .username(user.getUsername())
             .bio(user.getBio())
             .profilePicture(user.getProfilePicture())
-            .posts(posts)
+            .posts(posts.stream().map(utility::mapToPostResponse).toList())
             .build();
     }
 
     public List<UserResponse> getUsers(String search) {
         if (search == null || search.isBlank()) {
             return userRepo.findAll().stream()
-                    .map(this::mapToUserResponse)
+                    .map(utility::mapToUserResponse)
                     .toList();
         }
         return userRepo.findAllByUsernameContains(search).stream()
-                .map(this::mapToUserResponse)
+                .map(utility::mapToUserResponse)
                 .toList();
     }
 
     public List<UserResponse> getFollowing(String search) {
         if (search == null || search.isBlank()) {
             return utility.getLoggedInUser().getFollowing().stream()
-                    .map(this::mapToUserResponse)
+                    .map(utility::mapToUserResponse)
                     .toList();
         }
         return utility.getLoggedInUser().getFollowing().stream()
                 .filter(user -> user.getUsername().contains(search))
-                .map(this::mapToUserResponse)
+                .map(utility::mapToUserResponse)
                 .toList();
     }
 
     public List<UserResponse> getFollowers(String search) {
         if (search == null || search.isBlank()) {
             return userRepo.findFollowers(utility.getLoggedInUser().getId()).stream()
-                .map(this::mapToUserResponse)
+                .map(utility::mapToUserResponse)
                 .toList();
         }
         return userRepo.findFollowers(utility.getLoggedInUser().getId()).stream()
                 .filter(user -> user.getUsername().contains(search))
-                .map(this::mapToUserResponse)
+                .map(utility::mapToUserResponse)
                 .toList();
     }
 

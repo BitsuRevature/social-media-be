@@ -31,7 +31,7 @@ public class ReactionService {
                 .id(reaction.getId())
                 .type(reaction.getType())
                 .userResponse(
-                        userService.mapToUserResponse(reaction.getUser())
+                        utility.mapToUserResponse(reaction.getUser())
                 )
                 .build();
     }
