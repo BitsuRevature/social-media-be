@@ -2,7 +2,6 @@ package com.bitsu.social_media.service;
 
 import com.bitsu.social_media.dto.PostRequest;
 import com.bitsu.social_media.dto.PostResponse;
-import com.bitsu.social_media.model.Comment;
 import com.bitsu.social_media.model.Post;
 import com.bitsu.social_media.model.Reaction;
 import com.bitsu.social_media.model.User;
@@ -35,7 +34,7 @@ public class PostService {
                     .toList();
         }
 
-        return postRepo.findAllByContentContains(search).stream()
+        return postRepo.findPostsBySearchTerm(search).stream()
                 .map(utility::mapToPostResponse)
                 .toList();
     }
