@@ -7,6 +7,8 @@ import com.bitsu.social_media.dto.UserProfilePic;
 import com.bitsu.social_media.dto.UserProfileResponse;
 import com.bitsu.social_media.dto.UserResponse;
 import com.bitsu.social_media.service.UserService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
@@ -25,14 +27,14 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<UserResponse>> getUsers(
-            @RequestParam String search
+            @RequestParam(required = false) String search
     ) {
         return ResponseEntity.ok(userService.getUsers(search));
     }
 
     @GetMapping("/{username}")
     public ResponseEntity<UserProfileResponse> getUser(
-            @PathVariable String username
+            @NotBlank @PathVariable String username
     ) {
         var user = userService.getUser(username);
         return ResponseEntity.ok(user);
@@ -40,34 +42,40 @@ public class UserController {
 
     @GetMapping("following")
     public ResponseEntity<List<UserResponse>> getFollowing(
-            @RequestParam String search
+            @RequestParam(required = false) String search
     ) {
         return ResponseEntity.ok(userService.getFollowing(search));
     }
 
     @GetMapping("followers")
     public ResponseEntity<List<UserResponse>> getFollowers(
-            @RequestParam String search
+            @RequestParam(required = false) String search
     ) {
         return ResponseEntity.ok(userService.getFollowers(search));
     }
 
     @PutMapping("/PI")
-    public void updatePI(@RequestBody UserPIInfo userPIInfo) {
+    public void updatePI(
+            @Valid @RequestBody UserPIInfo userPIInfo
+    ) {
         log.error("Update: " + userPIInfo);
         userService.updatePI (userPIInfo);
         ResponseEntity.ok();
     }
 
     @PutMapping("/bio")
-    public void updateBio(@RequestBody UserBioInfo userBioInfo) {
+    public void updateBio(
+            @Valid @RequestBody UserBioInfo userBioInfo
+    ) {
         log.error("Update: " + userBioInfo);
         userService.updateBio(userBioInfo);
         ResponseEntity.ok();
     }
 
     @PutMapping("/profilePic")
-    public void updateProfilePic(@RequestBody UserProfilePic userProfilePic) {
+    public void updateProfilePic(
+            @Valid @RequestBody UserProfilePic userProfilePic
+    ) {
         log.error("Update: " + userProfilePic);
         userService.updateProfilePic(userProfilePic);
         ResponseEntity.ok();
