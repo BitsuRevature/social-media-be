@@ -38,9 +38,9 @@ This project is a social media application built using Java, Spring Boot, and Ma
 - Custom exception handling is implemented in controllers to manage specific exceptions like UsernameNotFoundException. 
 
 ## CI/CD Pipeline:
-This Jenkins pipeline automates the process of building, testing, and deploying a Java Spring Boot application. Here is a step-by-step explanation of each stage:  
-Pipeline Overview
+This Jenkins pipeline automates the process of building, testing, and deploying a Java Spring Boot application. Here is a step-by-step explanation of each stage:
 
+### Pipeline Overview
 - **Agent**: Specifies that the pipeline can run on any available Jenkins agent.
 - **Environment**: Defines environment variables, including AWS credentials, Docker credentials, and database connection details.
 - **Tools**: Specifies the Maven version to use.

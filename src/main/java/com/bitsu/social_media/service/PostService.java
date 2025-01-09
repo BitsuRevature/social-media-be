@@ -49,7 +49,7 @@ public class PostService {
 
         return postRepo.findPostsByFollowing(utility.getLoggedInUser().getFollowing().stream().map(user -> user.getId()).toList())
                 .stream()
-                .filter(post -> post.getContent().contains(search))
+                .filter(post -> (post.getContent().toLowerCase().contains(search.toLowerCase()) || post.getUser().getUsername().toLowerCase().contains(search.toLowerCase())))
                 .map(utility::mapToPostResponse)
                 .toList();
     }
