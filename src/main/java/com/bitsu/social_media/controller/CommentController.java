@@ -38,7 +38,7 @@ public class CommentController {
 
     @DeleteMapping("/{id}")
     public void deleteComment(
-            @NotNull @PathVariable int id
+            @PathVariable int id
     ) {
         log.error("Delete: " + id);
         commentService.deleteComment(id);
@@ -47,7 +47,7 @@ public class CommentController {
 
     @PutMapping("/{id}")
     public ResponseEntity<CommentResponse> updateComment(
-            @NotNull @PathVariable int id,
+            @PathVariable int id,
             @Valid @RequestBody CommentRequest commentRequest
     ) {
         log.error("Update: " + id + " " + commentRequest);

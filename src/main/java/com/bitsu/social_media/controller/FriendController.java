@@ -24,7 +24,7 @@ public class FriendController {
     // Send a friend request
     @PostMapping("/{id}")
     public ResponseEntity<Void> addFriend(
-           @NotNull @PathVariable int id
+           @PathVariable int id
     ) {
         log.info("Sending friend request to user with ID: {}", id);
         friendService.addFriend(id);
@@ -34,7 +34,7 @@ public class FriendController {
     // Accept a friend request
     @PutMapping("/requests/{requestId}/accept")
     public ResponseEntity<Void> acceptFriendRequest(
-           @NotNull @PathVariable int requestId
+           @PathVariable int requestId
     ) {
         log.info("Accepting friend request with ID: {}", requestId);
         friendService.acceptFriendRequest(requestId);
@@ -44,7 +44,7 @@ public class FriendController {
     // Decline a friend request
     @PutMapping("/requests/{requestId}/decline")
     public ResponseEntity<Void> declineFriendRequest(
-            @NotNull @PathVariable int requestId
+            @PathVariable int requestId
     ) {
         log.info("Declining friend request with ID: {}", requestId);
         friendService.declineFriendRequest(requestId);
@@ -54,7 +54,7 @@ public class FriendController {
     // Unfriend a user
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> unfriend(
-            @NotNull @PathVariable int id
+            @PathVariable int id
     ) {
         log.info("Unfriending user with ID: {}", id);
         friendService.unfriend(id);
@@ -72,7 +72,7 @@ public class FriendController {
     // Check if two users are friends
     @GetMapping("/is-friend/{userId}")
     public ResponseEntity<Boolean> isFriend(
-            @NotNull @PathVariable int userId
+            @PathVariable int userId
     ) {
         log.info("Checking friendship status with user ID: {}", userId);
         boolean isFriend = friendService.isFriend(userId);
