@@ -1,5 +1,9 @@
 package com.bitsu.social_media.advice;
 
+import com.bitsu.social_media.exception.AlreadyFriendsException;
+import com.bitsu.social_media.exception.FriendRequestExistsException;
+import com.bitsu.social_media.exception.NotFoundException;
+import com.bitsu.social_media.exception.SelfFriendRequestException;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -25,5 +29,40 @@ public class AppExceptionHandler {
 
         return errors;
     }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(SelfFriendRequestException.class)
+    public Map<String, String> handleSelfFriendRequestException(SelfFriendRequestException ex){
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", ex.getMessage());
+        return errors;
+    }
+
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(FriendRequestExistsException.class)
+    public Map<String, String> handleFriendRequestExistsException(FriendRequestExistsException ex){
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", ex.getMessage());
+        return errors;
+    }
+
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ExceptionHandler(NotFoundException.class)
+    public Map<String, String> handleNotFoundException(NotFoundException ex){
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", ex.getMessage());
+        return errors;
+    }
+
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ExceptionHandler(AlreadyFriendsException.class)
+    public Map<String, String> handleAlreadyFriendsException(AlreadyFriendsException ex){
+        Map<String, String> errors = new HashMap<>();
+        errors.put("message", ex.getMessage());
+        return errors;
+    }
+
+
 
 }

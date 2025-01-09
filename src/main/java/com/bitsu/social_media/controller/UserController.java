@@ -34,7 +34,7 @@ public class UserController {
 
     @GetMapping("/{username}")
     public ResponseEntity<UserProfileResponse> getUser(
-            @NotBlank @PathVariable String username
+            @PathVariable String username
     ) {
         var user = userService.getUser(username);
         return ResponseEntity.ok(user);

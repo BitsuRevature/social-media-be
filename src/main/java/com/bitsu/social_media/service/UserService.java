@@ -5,6 +5,7 @@ import com.bitsu.social_media.dto.UserPIInfo;
 import com.bitsu.social_media.dto.UserProfilePic;
 import com.bitsu.social_media.dto.UserProfileResponse;
 import com.bitsu.social_media.dto.UserResponse;
+import com.bitsu.social_media.exception.NotFoundException;
 import com.bitsu.social_media.model.Post;
 import com.bitsu.social_media.model.User;
 import com.bitsu.social_media.repository.UserRepo;
@@ -47,7 +48,7 @@ public class UserService {
     }
 
     public UserProfileResponse getUser(String username) {
-        User user = userRepo.findByUsername(username).orElseThrow(() -> new RuntimeException("User not found"));
+        User user = userRepo.findByUsername(username).orElseThrow(() -> new NotFoundException("User not found"));
         List<Post> posts = user.getPosts();
         Collections.reverse(posts);
         return UserProfileResponse.builder()
@@ -98,14 +99,14 @@ public class UserService {
 
     public void unfollow(int id) {
         User user = utility.getLoggedInUser();
-        User userToUnfollow = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User to unfollow not found"));
+        User userToUnfollow = userRepo.findById(id).orElseThrow(() -> new NotFoundException("User to unfollow not found"));
         user.getFollowing().remove(userToUnfollow);
         userRepo.save(user);
     }
 
     public void follow(int id) {
         User user = utility.getLoggedInUser();
-        User userToFollow = userRepo.findById(id).orElseThrow(() -> new RuntimeException("User to follow not found"));
+        User userToFollow = userRepo.findById(id).orElseThrow(() -> new NotFoundException("User to follow not found"));
         user.getFollowing().add(userToFollow);
         userRepo.save(user);
     }
