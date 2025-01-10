@@ -102,4 +102,9 @@ public class UserController {
         userService.follow(id);
         ResponseEntity.ok();
     }
+
+    @GetMapping("/following/check/{id}")
+    public ResponseEntity<Boolean> checkFollowing(@PathVariable int id) {
+        return ResponseEntity.ok(userService.checkFollowing(id));
+    }
 }
