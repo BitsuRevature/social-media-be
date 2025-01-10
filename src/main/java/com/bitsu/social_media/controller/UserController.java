@@ -1,11 +1,7 @@
 package com.bitsu.social_media.controller;
 
 
-import com.bitsu.social_media.dto.UserBioInfo;
-import com.bitsu.social_media.dto.UserPIInfo;
-import com.bitsu.social_media.dto.UserProfilePic;
-import com.bitsu.social_media.dto.UserProfileResponse;
-import com.bitsu.social_media.dto.UserResponse;
+import com.bitsu.social_media.dto.*;
 import com.bitsu.social_media.service.UserService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
@@ -26,10 +22,15 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public ResponseEntity<List<UserResponse>> getUsers(
-            @RequestParam(required = false) String search
+    public ResponseEntity<PagedUser> getUsers(
+            @RequestParam(required = false) String search,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "username") String sortBy,
+            @RequestParam(defaultValue = "true") boolean ascending
     ) {
-        return ResponseEntity.ok(userService.getUsers(search));
+        var result = userService.getUsers(search, page, size, sortBy, ascending);
+        return ResponseEntity.ok(result);
     }
 
     @GetMapping("/{username}")

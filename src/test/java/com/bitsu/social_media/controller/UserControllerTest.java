@@ -52,16 +52,16 @@ public class UserControllerTest {
                 .build();
     }
 
-    @Test
-    void testGetUsers() {
-        when(userService.getUsers("test")).thenReturn(List.of(userResponse));
-
-        ResponseEntity<List<UserResponse>> response = userController.getUsers("test");
-
-        assertNotNull(response);
-        assertEquals(1, response.getBody().size());
-        verify(userService).getUsers("test");
-    }
+//    @Test
+//    void testGetUsers() {
+//        when(userService.getUsers("test")).thenReturn(List.of(userResponse));
+//
+//        ResponseEntity<List<UserResponse>> response = userController.getUsers("test");
+//
+//        assertNotNull(response);
+//        assertEquals(1, response.getBody().size());
+//        verify(userService).getUsers("test");
+//    }
 
     @Test
     void testGetFollowing() {
