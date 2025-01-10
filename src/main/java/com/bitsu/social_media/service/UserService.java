@@ -87,16 +87,31 @@ public class UserService {
                 .build();
     }
 
-    public List<UserResponse> getFollowing(String search) {
+    public PagedUser getFollowing(String search, int page, int size, String sortBy, boolean ascending) {
+
+        var loggedInUser = utility.getLoggedInUser();
+
+        Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
         if (search == null || search.isBlank()) {
-            return utility.getLoggedInUser().getFollowing().stream()
-                    .map(utility::mapToUserResponse)
-                    .toList();
+            var usersPageable = userRepo.findAllFollowingUser(loggedInUser, pageable);
+            return PagedUser.builder()
+                    .users(usersPageable.getContent().stream().map(utility::mapToUserResponse).toList())
+                    .hasNext(usersPageable.hasNext())
+                    .currentPage(usersPageable.getNumber())
+                    .totalPages(usersPageable.getTotalPages())
+                    .size(usersPageable.getSize())
+                    .build();
         }
-        return utility.getLoggedInUser().getFollowing().stream()
-                .filter(user -> user.getUsername().contains(search))
-                .map(utility::mapToUserResponse)
-                .toList();
+        var usersPageable = userRepo.findAllByFollowingAndUsernameContains(loggedInUser, search, pageable);
+        return PagedUser.builder()
+                .users(usersPageable.getContent().stream().map(utility::mapToUserResponse).toList())
+                .hasNext(usersPageable.hasNext())
+                .currentPage(usersPageable.getNumber())
+                .totalPages(usersPageable.getTotalPages())
+                .size(usersPageable.getSize())
+                .build();
     }
 
     public List<UserResponse> getFollowers(String search) {
@@ -112,6 +127,7 @@ public class UserService {
     }
 
     public void unfollow(int id) {
+        log.info("here");
         User user = utility.getLoggedInUser();
         User userToUnfollow = userRepo.findById(id).orElseThrow(() -> new NotFoundException("User to unfollow not found"));
         user.getFollowing().remove(userToUnfollow);
