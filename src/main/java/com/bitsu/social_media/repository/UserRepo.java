@@ -15,7 +15,9 @@ import java.util.Optional;
 public interface UserRepo extends JpaRepository<User, Integer> {
     Optional<User> findByUsername(String username);
 
-    Page<User> findAllByUsernameContains(String search, Pageable pageable);
+    Page<User> findAllByUsernameContainsAndUsernameNot(String search, String username, Pageable pageable);
+
+    Page<User> findAllByUsernameNot(String username, Pageable pageable);
 
     @Query("SELECT u FROM User u JOIN u.following f WHERE f.id = :currentUserID")
     List<User> findFollowers(@Param("currentUserID") int currentUserID);
