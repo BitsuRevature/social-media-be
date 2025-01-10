@@ -158,4 +158,12 @@ public class UserService {
         user.getFollowing().add(userToFollow);
         userRepo.save(user);
     }
+
+    public boolean checkFollowing(int id) {
+        User user = utility.getLoggedInUser();
+        User userToCheck = userRepo.findById(id).orElseThrow(() -> new NotFoundException("User to check not found"));
+        var res = user.getFollowing().contains(userToCheck);
+        log.info("Following: " + res);
+        return res;
+    }
 }
