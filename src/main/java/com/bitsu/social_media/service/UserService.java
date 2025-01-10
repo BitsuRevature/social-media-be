@@ -62,12 +62,13 @@ public class UserService {
     }
 
     public PagedUser getUsers(String search, int page, int size, String sortBy, boolean ascending) {
+        var loggedInUser = utility.getLoggedInUser();
 
         Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
         Pageable pageable = PageRequest.of(page, size, sort);
 
         if (search == null || search.isBlank()) {
-            var usersPageable = userRepo.findAll(pageable);
+            var usersPageable = userRepo.findAllByUsernameNot(loggedInUser.getUsername(), pageable);
             return PagedUser.builder()
                     .users(usersPageable.getContent().stream().map(utility::mapToUserResponse).toList())
                     .hasNext(usersPageable.hasNext())
@@ -76,7 +77,7 @@ public class UserService {
                     .size(usersPageable.getSize())
                     .build();
         }
-        var usersPageable = userRepo.findAllByUsernameContains(search, pageable);
+        var usersPageable = userRepo.findAllByUsernameContainsAndUsernameNot(search, loggedInUser.getUsername(), pageable);
         return PagedUser.builder()
                 .users(usersPageable.getContent().stream().map(utility::mapToUserResponse).toList())
                 .hasNext(usersPageable.hasNext())
