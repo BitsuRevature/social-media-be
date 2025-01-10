@@ -8,6 +8,7 @@ import com.bitsu.social_media.repository.UserRepo;
 import com.bitsu.social_media.utility.Utility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -114,16 +115,33 @@ public class UserService {
                 .build();
     }
 
-    public List<UserResponse> getFollowers(String search) {
+    public PagedUser getFollowers(String search, int page, int size, String sortBy, boolean ascending) {
+
+        var loggedInUser = utility.getLoggedInUser();
+
+        Sort sort = ascending ? Sort.by(sortBy).ascending() : Sort.by(sortBy).descending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+
         if (search == null || search.isBlank()) {
-            return userRepo.findFollowers(utility.getLoggedInUser().getId()).stream()
-                .map(utility::mapToUserResponse)
-                .toList();
+
+            var usersPageable = userRepo.findFollowers(loggedInUser.getId(), pageable);
+            return PagedUser.builder()
+                    .users(usersPageable.getContent().stream().map(utility::mapToUserResponse).toList())
+                    .hasNext(usersPageable.hasNext())
+                    .currentPage(usersPageable.getNumber())
+                    .totalPages(usersPageable.getTotalPages())
+                    .size(usersPageable.getSize())
+                    .build();
         }
-        return userRepo.findFollowers(utility.getLoggedInUser().getId()).stream()
-                .filter(user -> user.getUsername().contains(search))
-                .map(utility::mapToUserResponse)
-                .toList();
+
+        var usersPageable = userRepo.findFollowers(loggedInUser.getId(), search, pageable);
+        return PagedUser.builder()
+                .users(usersPageable.getContent().stream().map(utility::mapToUserResponse).toList())
+                .hasNext(usersPageable.hasNext())
+                .currentPage(usersPageable.getNumber())
+                .totalPages(usersPageable.getTotalPages())
+                .size(usersPageable.getSize())
+                .build();
     }
 
     public void unfollow(int id) {

@@ -54,10 +54,14 @@ public class UserController {
     }
 
     @GetMapping("followers")
-    public ResponseEntity<List<UserResponse>> getFollowers(
-            @RequestParam(required = false) String search
+    public ResponseEntity<PagedUser> getFollowers(
+            @RequestParam(required = false) String search,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "username") String sortBy,
+            @RequestParam(defaultValue = "true") boolean ascending
     ) {
-        return ResponseEntity.ok(userService.getFollowers(search));
+        return ResponseEntity.ok(userService.getFollowers(search, page, size, sortBy, ascending));
     }
 
     @PutMapping("/PI")

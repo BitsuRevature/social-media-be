@@ -25,5 +25,8 @@ public interface UserRepo extends JpaRepository<User, Integer> {
     Page<User> findAllByFollowingAndUsernameContains(User user, String search, Pageable pageable);
 
     @Query("SELECT u FROM User u JOIN u.following f WHERE f.id = :currentUserID")
-    List<User> findFollowers(@Param("currentUserID") int currentUserID);
+    Page<User> findFollowers(@Param("currentUserID") int currentUserID, Pageable pageable);
+
+    @Query("SELECT u FROM User u JOIN u.following f WHERE f.id = :currentUserID AND u.username LIKE %:search%")
+    Page<User> findFollowers(@Param("currentUserID") int currentUserID, @Param("search") String search, Pageable pageable);
 }
