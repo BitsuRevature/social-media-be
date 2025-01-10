@@ -42,17 +42,26 @@ public class UserController {
     }
 
     @GetMapping("following")
-    public ResponseEntity<List<UserResponse>> getFollowing(
-            @RequestParam(required = false) String search
+    public ResponseEntity<PagedUser> getFollowing(
+            @RequestParam(required = false) String search,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "username") String sortBy,
+            @RequestParam(defaultValue = "true") boolean ascending
+
     ) {
-        return ResponseEntity.ok(userService.getFollowing(search));
+        return ResponseEntity.ok(userService.getFollowing(search, page, size, sortBy, ascending));
     }
 
     @GetMapping("followers")
-    public ResponseEntity<List<UserResponse>> getFollowers(
-            @RequestParam(required = false) String search
+    public ResponseEntity<PagedUser> getFollowers(
+            @RequestParam(required = false) String search,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size,
+            @RequestParam(defaultValue = "username") String sortBy,
+            @RequestParam(defaultValue = "true") boolean ascending
     ) {
-        return ResponseEntity.ok(userService.getFollowers(search));
+        return ResponseEntity.ok(userService.getFollowers(search, page, size, sortBy, ascending));
     }
 
     @PutMapping("/PI")
@@ -60,7 +69,7 @@ public class UserController {
             @Valid @RequestBody UserPIInfo userPIInfo
     ) {
         log.error("Update: " + userPIInfo);
-        userService.updatePI (userPIInfo);
+        userService.updatePI(userPIInfo);
         ResponseEntity.ok();
     }
 
