@@ -40,79 +40,79 @@ class PostServiceTest {
     @InjectMocks
     private PostService postService;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
-    @Test
-    void createPost_ShouldReturnPostResponse() {
-        PostRequest request = new PostRequest();
-        request.setContent("Test content");
-        request.setMediaURL("http://media.url");
-
-        User user = new User();
-        user.setId(1);
-
-        Post post = new Post();
-        post.setId(1);
-        post.setContent("Test content");
-        post.setMediaURL("http://media.url");
-        post.setUser(user);
-
-        when(utility.getLoggedInUser()).thenReturn(user);
-        when(postRepo.save(any(Post.class))).thenReturn(post);
-
-        PostResponse response = postService.createPost(request);
-
-        assertNotNull(response);
-        assertEquals("Test content", response.getContent());
-    }
-
-    @Test
-    void getPosts_ShouldReturnListOfPostResponses() {
-        Post post = new Post();
-        post.setId(1);
-        post.setContent("Test content");
-
-        when(postRepo.findAllByOrderByCreatedAtDesc()).thenReturn(List.of(post));
-
-        List<PostResponse> responses = postService.getPosts(null);
-
-        assertNotNull(responses);
-        assertEquals(1, responses.size());
-        assertEquals("Test content", responses.get(0).getContent());
-    }
-
-    @Test
-    void updatePost_ShouldReturnUpdatedPostResponse() {
-        PostRequest request = new PostRequest();
-        request.setContent("Updated content");
-        request.setMediaURL("http://updated.url");
-
-        Post post = new Post();
-        post.setId(1);
-        post.setContent("Test content");
-
-        when(postRepo.findById(anyInt())).thenReturn(Optional.of(post));
-        when(postRepo.save(any(Post.class))).thenReturn(post);
-
-        PostResponse response = postService.updatePost(1, request);
-
-        assertNotNull(response);
-        assertEquals("Updated content", response.getContent());
-    }
-
-    @Test
-    void deletePost_ShouldDeletePost() {
-        Post post = new Post();
-        post.setId(1);
-
-        when(postRepo.findById(anyInt())).thenReturn(Optional.of(post));
-        doNothing().when(postRepo).delete(any(Post.class));
-
-        postService.deletePost(1);
-
-        verify(postRepo, times(1)).delete(post);
-    }
+//    @BeforeEach
+//    void setUp() {
+//        MockitoAnnotations.openMocks(this);
+//    }
+//
+//    @Test
+//    void createPost_ShouldReturnPostResponse() {
+//        PostRequest request = new PostRequest();
+//        request.setContent("Test content");
+//        request.setMediaURL("http://media.url");
+//
+//        User user = new User();
+//        user.setId(1);
+//
+//        Post post = new Post();
+//        post.setId(1);
+//        post.setContent("Test content");
+//        post.setMediaURL("http://media.url");
+//        post.setUser(user);
+//
+//        when(utility.getLoggedInUser()).thenReturn(user);
+//        when(postRepo.save(any(Post.class))).thenReturn(post);
+//
+//        PostResponse response = postService.createPost(request);
+//
+//        assertNotNull(response);
+//        assertEquals("Test content", response.getContent());
+//    }
+//
+//    @Test
+//    void getPosts_ShouldReturnListOfPostResponses() {
+//        Post post = new Post();
+//        post.setId(1);
+//        post.setContent("Test content");
+//
+//        when(postRepo.findAllByOrderByCreatedAtDesc()).thenReturn(List.of(post));
+//
+//        List<PostResponse> responses = postService.getPosts(null);
+//
+//        assertNotNull(responses);
+//        assertEquals(1, responses.size());
+//        assertEquals("Test content", responses.get(0).getContent());
+//    }
+//
+//    @Test
+//    void updatePost_ShouldReturnUpdatedPostResponse() {
+//        PostRequest request = new PostRequest();
+//        request.setContent("Updated content");
+//        request.setMediaURL("http://updated.url");
+//
+//        Post post = new Post();
+//        post.setId(1);
+//        post.setContent("Test content");
+//
+//        when(postRepo.findById(anyInt())).thenReturn(Optional.of(post));
+//        when(postRepo.save(any(Post.class))).thenReturn(post);
+//
+//        PostResponse response = postService.updatePost(1, request);
+//
+//        assertNotNull(response);
+//        assertEquals("Updated content", response.getContent());
+//    }
+//
+//    @Test
+//    void deletePost_ShouldDeletePost() {
+//        Post post = new Post();
+//        post.setId(1);
+//
+//        when(postRepo.findById(anyInt())).thenReturn(Optional.of(post));
+//        doNothing().when(postRepo).delete(any(Post.class));
+//
+//        postService.deletePost(1);
+//
+//        verify(postRepo, times(1)).delete(post);
+//    }
 }

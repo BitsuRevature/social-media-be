@@ -25,6 +25,14 @@ pipeline {
             }
         }
 
+        stage('Tests') {
+            steps {
+                script {
+                    sh "mvn test";
+                }
+            }
+        }
+
         stage('Build jar file') {
             steps {
                 script {
