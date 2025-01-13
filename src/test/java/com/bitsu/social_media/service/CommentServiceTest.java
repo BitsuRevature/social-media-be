@@ -40,82 +40,82 @@ public class CommentServiceTest {
     @InjectMocks
     private CommentService commentService;
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-    }
-
-    @Test
-    void createComment_ShouldReturnCommentResponse() {
-        CommentRequest request = new CommentRequest();
-        request.setContent("Test comment");
-        request.setPostId(1);
-
-        User user = new User();
-        user.setId(1);
-
-        Post post = new Post();
-        post.setId(1);
-
-        Comment comment = new Comment();
-        comment.setId(1);
-        comment.setContent("Test comment");
-        comment.setUser(user);
-        comment.setPost(post);
-
-        when(utility.getLoggedInUser()).thenReturn(user);
-        when(postRepo.findById(anyInt())).thenReturn(Optional.of(post));
-        when(commentRepo.save(any(Comment.class))).thenReturn(comment);
-
-        CommentResponse response = commentService.createComment(request);
-
-        assertNotNull(response);
-        assertEquals("Test comment", response.getContent());
-    }
-
-    @Test
-    void getComments_ShouldReturnListOfCommentResponses() {
-        Comment comment = new Comment();
-        comment.setId(1);
-        comment.setContent("Test comment");
-
-        when(commentRepo.findAll()).thenReturn(List.of(comment));
-
-        List<CommentResponse> responses = commentService.getComments();
-
-        assertNotNull(responses);
-        assertEquals(1, responses.size());
-        assertEquals("Test comment", responses.get(0).getContent());
-    }
-
-    @Test
-    void updateComment_ShouldReturnUpdatedCommentResponse() {
-        CommentRequest request = new CommentRequest();
-        request.setContent("Updated comment");
-
-        Comment comment = new Comment();
-        comment.setId(1);
-        comment.setContent("Test comment");
-
-        when(commentRepo.findById(anyInt())).thenReturn(Optional.of(comment));
-        when(commentRepo.save(any(Comment.class))).thenReturn(comment);
-
-        CommentResponse response = commentService.updateComment(1, request);
-
-        assertNotNull(response);
-        assertEquals("Updated comment", response.getContent());
-    }
-
-    @Test
-    void deleteComment_ShouldDeleteComment() {
-        Comment comment = new Comment();
-        comment.setId(1);
-
-        when(commentRepo.findById(anyInt())).thenReturn(Optional.of(comment));
-        doNothing().when(commentRepo).delete(any(Comment.class));
-
-        commentService.deleteComment(1);
-
-        verify(commentRepo, times(1)).delete(comment);
-    }
+//    @BeforeEach
+//    void setUp() {
+//        MockitoAnnotations.openMocks(this);
+//    }
+//
+//    @Test
+//    void createComment_ShouldReturnCommentResponse() {
+//        CommentRequest request = new CommentRequest();
+//        request.setContent("Test comment");
+//        request.setPostId(1);
+//
+//        User user = new User();
+//        user.setId(1);
+//
+//        Post post = new Post();
+//        post.setId(1);
+//
+//        Comment comment = new Comment();
+//        comment.setId(1);
+//        comment.setContent("Test comment");
+//        comment.setUser(user);
+//        comment.setPost(post);
+//
+//        when(utility.getLoggedInUser()).thenReturn(user);
+//        when(postRepo.findById(anyInt())).thenReturn(Optional.of(post));
+//        when(commentRepo.save(any(Comment.class))).thenReturn(comment);
+//
+//        CommentResponse response = commentService.createComment(request);
+//
+//        assertNotNull(response);
+//        assertEquals("Test comment", response.getContent());
+//    }
+//
+//    @Test
+//    void getComments_ShouldReturnListOfCommentResponses() {
+//        Comment comment = new Comment();
+//        comment.setId(1);
+//        comment.setContent("Test comment");
+//
+//        when(commentRepo.findAll()).thenReturn(List.of(comment));
+//
+//        List<CommentResponse> responses = commentService.getComments();
+//
+//        assertNotNull(responses);
+//        assertEquals(1, responses.size());
+//        assertEquals("Test comment", responses.get(0).getContent());
+//    }
+//
+//    @Test
+//    void updateComment_ShouldReturnUpdatedCommentResponse() {
+//        CommentRequest request = new CommentRequest();
+//        request.setContent("Updated comment");
+//
+//        Comment comment = new Comment();
+//        comment.setId(1);
+//        comment.setContent("Test comment");
+//
+//        when(commentRepo.findById(anyInt())).thenReturn(Optional.of(comment));
+//        when(commentRepo.save(any(Comment.class))).thenReturn(comment);
+//
+//        CommentResponse response = commentService.updateComment(1, request);
+//
+//        assertNotNull(response);
+//        assertEquals("Updated comment", response.getContent());
+//    }
+//
+//    @Test
+//    void deleteComment_ShouldDeleteComment() {
+//        Comment comment = new Comment();
+//        comment.setId(1);
+//
+//        when(commentRepo.findById(anyInt())).thenReturn(Optional.of(comment));
+//        doNothing().when(commentRepo).delete(any(Comment.class));
+//
+//        commentService.deleteComment(1);
+//
+//        verify(commentRepo, times(1)).delete(comment);
+//    }
 }

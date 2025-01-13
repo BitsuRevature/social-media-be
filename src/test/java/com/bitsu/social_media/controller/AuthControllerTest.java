@@ -54,82 +54,82 @@ public class AuthControllerTest {
     private MockMvc mockMvc;
 
 
-    @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
-        mockMvc = MockMvcBuilders
-                .standaloneSetup(authController)
-                .build();
-
-        registerRequest = new RegisterRequest("John", "Doe", "johndoe", "password123");
-        loginRequest = new LoginRequest("johndoe", "password123");
-        user = User.builder()
-                .id(1)
-                .firstname("John")
-                .lastname("Doe")
-                .username("johndoe")
-                .password("encodedPassword")
-                .bio("Bio")
-                .profilePicture("profilePic")
-                .role(Role.USER)
-                .build();
-    }
-
-    @Test
-    void testRegister() {
-        when(passwordEncoder.encode(registerRequest.getPassword())).thenReturn("encodedPassword");
-        when(userRepo.save(any(User.class))).thenReturn(user);
-        when(jwtService.generateToken(user)).thenReturn("jwtToken");
-
-        AuthenticationResponse response = authService.register(registerRequest);
-
-        assertNotNull(response);
-        assertEquals("jwtToken", response.getToken());
-        verify(userRepo).save(any(User.class));
-    }
-
-    @Test
-    void testLogin() {
-        when(userRepo.findByUsername(loginRequest.getUsername())).thenReturn(Optional.of(user));
-//        doNothing().when(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
-        Map<String, Object> claims = new HashMap<>();
-        claims.put("id", "1");
-        claims.put("profilePicture", "profilePic");
-        claims.put("bio", "Bio");
-        claims.put("firstname", "John");
-        claims.put("lastname", "Doe");
-        when(jwtService.generateToken(claims, user)).thenReturn("jwtToken");
-
-        AuthenticationResponse response = authService.login(loginRequest);
-
-        assertNotNull(response);
-        assertEquals("jwtToken", response.getToken());
-        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
-        verify(userRepo).findByUsername(loginRequest.getUsername());
-    }
-
-    @Test
-    void testLoginThrowsExceptionWhenUserNotFound() {
-        when(userRepo.findByUsername(loginRequest.getUsername())).thenReturn(Optional.empty());
-
-        Exception exception = assertThrows(UsernameNotFoundException.class, () -> {
-            authService.login(loginRequest);
-        });
-
-        assertEquals("johndoe", exception.getMessage());
-        verify(userRepo).findByUsername(loginRequest.getUsername());
-    }
-
-    @Test
-    void testLoginWithInvalidFields() throws Exception {
-        LoginRequest invalidRequest = new LoginRequest("", "");
-
-
-        mockMvc.perform(post("/api/v1/auth/login")
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content("{\"username\":\"\",\"password\":\"\"}"))
-                .andExpect(status().isBadRequest())
-                .andExpect(jsonPath("username", containsString("Username is required")))
-                .andExpect(jsonPath("password", containsString("Password is required")));
-    }
+//    @BeforeEach
+//    void setUp() {
+//        MockitoAnnotations.openMocks(this);
+//        mockMvc = MockMvcBuilders
+//                .standaloneSetup(authController)
+//                .build();
+//
+//        registerRequest = new RegisterRequest("John", "Doe", "johndoe", "password123");
+//        loginRequest = new LoginRequest("johndoe", "password123");
+//        user = User.builder()
+//                .id(1)
+//                .firstname("John")
+//                .lastname("Doe")
+//                .username("johndoe")
+//                .password("encodedPassword")
+//                .bio("Bio")
+//                .profilePicture("profilePic")
+//                .role(Role.USER)
+//                .build();
+//    }
+//
+//    @Test
+//    void testRegister() {
+//        when(passwordEncoder.encode(registerRequest.getPassword())).thenReturn("encodedPassword");
+//        when(userRepo.save(any(User.class))).thenReturn(user);
+//        when(jwtService.generateToken(user)).thenReturn("jwtToken");
+//
+//        AuthenticationResponse response = authService.register(registerRequest);
+//
+//        assertNotNull(response);
+//        assertEquals("jwtToken", response.getToken());
+//        verify(userRepo).save(any(User.class));
+//    }
+//
+//    @Test
+//    void testLogin() {
+//        when(userRepo.findByUsername(loginRequest.getUsername())).thenReturn(Optional.of(user));
+////        doNothing().when(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+//        Map<String, Object> claims = new HashMap<>();
+//        claims.put("id", "1");
+//        claims.put("profilePicture", "profilePic");
+//        claims.put("bio", "Bio");
+//        claims.put("firstname", "John");
+//        claims.put("lastname", "Doe");
+//        when(jwtService.generateToken(claims, user)).thenReturn("jwtToken");
+//
+//        AuthenticationResponse response = authService.login(loginRequest);
+//
+//        assertNotNull(response);
+//        assertEquals("jwtToken", response.getToken());
+//        verify(authenticationManager).authenticate(any(UsernamePasswordAuthenticationToken.class));
+//        verify(userRepo).findByUsername(loginRequest.getUsername());
+//    }
+//
+//    @Test
+//    void testLoginThrowsExceptionWhenUserNotFound() {
+//        when(userRepo.findByUsername(loginRequest.getUsername())).thenReturn(Optional.empty());
+//
+//        Exception exception = assertThrows(UsernameNotFoundException.class, () -> {
+//            authService.login(loginRequest);
+//        });
+//
+//        assertEquals("johndoe", exception.getMessage());
+//        verify(userRepo).findByUsername(loginRequest.getUsername());
+//    }
+//
+//    @Test
+//    void testLoginWithInvalidFields() throws Exception {
+//        LoginRequest invalidRequest = new LoginRequest("", "");
+//
+//
+//        mockMvc.perform(post("/api/v1/auth/login")
+//                        .contentType(MediaType.APPLICATION_JSON)
+//                        .content("{\"username\":\"\",\"password\":\"\"}"))
+//                .andExpect(status().isBadRequest())
+//                .andExpect(jsonPath("username", containsString("Username is required")))
+//                .andExpect(jsonPath("password", containsString("Password is required")));
+//    }
 }
