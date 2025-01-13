@@ -79,7 +79,7 @@ public class FriendService {
 
         request.setStatus(FriendRequestStatus.ACCEPTED);
         friendRequestRepository.save(request);
-        log.info(request.toString());
+        //log.info(request.toString());
         friendRepository.save(Friend.builder()
                         .user(request.getReceiver())
                         .friend(request.getSender())
@@ -165,7 +165,7 @@ public class FriendService {
                 .orElseThrow(() -> new RuntimeException("Friend request not found."));
 
         request.setStatus(FriendRequestStatus.ACCEPTED);
-        log.info(request.toString());
+        //log.info(request.toString());
         friendRepository.save(Friend.builder()
                 .user(request.getReceiver())
                 .friend(request.getSender())

@@ -70,7 +70,7 @@ public class PostService {
     }
 
     public void deletePost(int id) {
-        log.info("Delete: " + id);
+        //log.info("Delete: " + id);
         Post post = postRepo.findById(id).orElseThrow(() -> new NotFoundException("Post not found"));
         if (post.getMediaURL() != null && !post.getMediaURL().isBlank()) {
             s3Service.deleteImageFromBucket(post.getMediaURL());

@@ -27,7 +27,7 @@ public class PostController {
     public ResponseEntity<List<PostResponse>> getPosts(
             @RequestParam(required = false) String search
     ) {
-        log.info("Get: ");
+        //log.info("Get: ");
         return ResponseEntity.ok(postService.getPosts(search));
     }
 
@@ -35,7 +35,7 @@ public class PostController {
     public ResponseEntity<List<PostResponse>> getFeed(
             @RequestParam(required = false) String search
     ) {
-        log.info("Get: ");
+        //log.info("Get: ");
         return ResponseEntity.ok(postService.getFeed(search));
     }
 
@@ -44,7 +44,7 @@ public class PostController {
     public ResponseEntity<PostResponse> createPost(
             @Valid @RequestBody PostRequest postRequest
     ) {
-        log.info("Create: " + postRequest);
+        //log.info("Create: " + postRequest);
         return ResponseEntity.ok(postService.createPost(postRequest));
     }
 
@@ -53,7 +53,7 @@ public class PostController {
     public void deletePost(
             @PathVariable int id
     ) {
-        log.info("Delete: " + id);
+        //log.info("Delete: " + id);
         postService.deletePost(id);
         ResponseEntity.ok();
     }
@@ -63,7 +63,7 @@ public class PostController {
             @PathVariable int id,
             @Valid @RequestBody PostRequest postRequest
     ) {
-        log.info("Update: " + id + " " + postRequest);
+        //log.info("Update: " + id + " " + postRequest);
         return ResponseEntity.ok(postService.updatePost(id, postRequest));
     }
 
@@ -71,7 +71,7 @@ public class PostController {
     public void deleteReactions(
             @PathVariable int postId
     ) {
-        log.info("Delete: " + postId);
+        //log.info("Delete: " + postId);
         postService.deleteReactions(postId);
         ResponseEntity.ok();
     }
