@@ -19,6 +19,8 @@ public interface FriendRequestRepository extends JpaRepository<FriendRequest, In
     // This method should check if a friend request exists and return a boolean
     @Query("SELECT CASE WHEN COUNT(f) > 0 THEN true ELSE false END FROM FriendRequest f WHERE f.sender.id = :senderId AND f.receiver.id = :receiverId")
     boolean existsBySenderIdAndReceiverId(@Param("senderId") int senderId, @Param("receiverId") int receiverId);
+    @Query("SELECT CASE WHEN COUNT(f) > 0 THEN true ELSE false END FROM FriendRequest f WHERE f.sender.id = :senderId AND f.receiver.id = :receiverId AND f.status=:status")
+    boolean existsBySenderIdAndReceiverId(@Param("senderId") int senderId, @Param("receiverId") int receiverId, @Param("status") FriendRequestStatus status);
 
     // This method should retrieve the FriendRequest object if it exists
     Optional<FriendRequest> findBySenderIdAndReceiverId(int senderId, int receiverId);

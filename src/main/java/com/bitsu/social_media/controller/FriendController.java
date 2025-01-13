@@ -3,6 +3,8 @@ package com.bitsu.social_media.controller;
 
 import com.bitsu.social_media.dto.FriendDTO;
 import com.bitsu.social_media.dto.FriendRequestDTO;
+import com.bitsu.social_media.dto.UserResponse;
+import com.bitsu.social_media.model.FriendRequestStatus;
 import com.bitsu.social_media.service.FriendService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -68,11 +70,32 @@ public class FriendController {
         return ResponseEntity.ok(isFriend);
     }
 
+    @GetMapping("/is-friend-request/{userId}/{status}")
+    public ResponseEntity<Boolean> isFriendRequest(@PathVariable int userId, @PathVariable FriendRequestStatus status) {
+        log.info("Checking friendship status with user ID: {}", userId);
+        boolean isFriend = friendService.isFriendRequest(userId, status);
+        return ResponseEntity.ok(isFriend);
+    }
+
     // Get pending friend requests
     @GetMapping("/requests")
-    public ResponseEntity<List<FriendRequestDTO>> getFriendRequests() {
+    public ResponseEntity<List<UserResponse>> getFriendRequests() {
         log.info("Fetching pending friend requests for the logged-in user");
-        List<FriendRequestDTO> friendRequests = friendService.getFriendRequests();
+        List<UserResponse> friendRequests = friendService.getFriendRequests();
         return ResponseEntity.ok(friendRequests);
     }
+    @PutMapping("/requests/accept/{requestId}")
+    public ResponseEntity<Void> acceptFriendRequestConnection(@PathVariable int requestId) {
+        log.info("Accepting friend request with ID: {}", requestId);
+        friendService.acceptFriendRequestConection(requestId);
+        return ResponseEntity.ok().build();
+    }
+    @PutMapping("/requests/decline/{requestId}")
+    public ResponseEntity<Void> declineFriendRequestConnection(@PathVariable int requestId) {
+        log.info("Accepting friend request with ID: {}", requestId);
+        friendService.declineFriendRequestConection(requestId);
+        return ResponseEntity.ok().build();
+    }
+
+
 }
