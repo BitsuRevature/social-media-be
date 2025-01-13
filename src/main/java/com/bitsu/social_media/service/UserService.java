@@ -96,7 +96,7 @@ public class UserService {
         Pageable pageable = PageRequest.of(page, size, sort);
 
         if (search == null || search.isBlank()) {
-            var usersPageable = userRepo.findAllFollowingUser(loggedInUser, pageable);
+            var usersPageable = userRepo.findAllFollowingUser(loggedInUser.getId(), pageable);
             return PagedUser.builder()
                     .users(usersPageable.getContent().stream().map(utility::mapToUserResponse).toList())
                     .hasNext(usersPageable.hasNext())
@@ -105,7 +105,7 @@ public class UserService {
                     .size(usersPageable.getSize())
                     .build();
         }
-        var usersPageable = userRepo.findAllByFollowingAndUsernameContains(loggedInUser, search, pageable);
+        var usersPageable = userRepo.findAllByFollowingAndUsernameContains(loggedInUser.getId(), search, pageable);
         return PagedUser.builder()
                 .users(usersPageable.getContent().stream().map(utility::mapToUserResponse).toList())
                 .hasNext(usersPageable.hasNext())
