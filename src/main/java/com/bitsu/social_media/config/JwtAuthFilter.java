@@ -37,10 +37,10 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         final String jwt;
         final String userName;
 
-        log.info(request.getRequestURL().toString());
-        log.info(request.toString());
+        //log.info(request.getRequestURL().toString());
+        //log.info(request.toString());
         if(authHeader == null || !authHeader.startsWith("Bearer ")){
-            log.info("Error: No Auth Header");
+            //log.info("Error: No Auth Header");
             filterChain.doFilter(request, response);
             return;
         }
@@ -48,7 +48,7 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         jwt = authHeader.substring(7);
 
         userName = jwtService.extractUserName(jwt);
-        log.info(userName);
+        //log.info(userName);
         if(userName != null && SecurityContextHolder.getContext().getAuthentication() == null) {
             UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
             if(jwtService.isTokenValid(jwt, userDetails)) {

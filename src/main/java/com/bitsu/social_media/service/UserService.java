@@ -144,7 +144,7 @@ public class UserService {
     }
 
     public void unfollow(int id) {
-        log.info("here");
+        //log.info("here");
         User user = utility.getLoggedInUser();
         User userToUnfollow = userRepo.findById(id).orElseThrow(() -> new NotFoundException("User to unfollow not found"));
         user.getFollowing().remove(userToUnfollow);
@@ -162,7 +162,7 @@ public class UserService {
         User user = utility.getLoggedInUser();
         User userToCheck = userRepo.findById(id).orElseThrow(() -> new NotFoundException("User to check not found"));
         var res = user.getFollowing().contains(userToCheck);
-        log.info("Following: " + res);
+        //log.info("Following: " + res);
         return res;
     }
 }
