@@ -8,7 +8,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -19,10 +18,17 @@ public interface UserRepo extends JpaRepository<User, Integer> {
 
     Page<User> findAllByUsernameNot(String username, Pageable pageable);
 
-    @Query("SELECT u.following FROM User u WHERE u.id = :currentUserID")
+    @Query(
+        value="SELECT f FROM User u JOIN u.following f WHERE u.id = :currentUserID",
+        countQuery = "SELECT COUNT(f) FROM User u JOIN u.following f WHERE u.id = :currentUserID"
+    )
     Page<User> findAllFollowingUser(@Param("currentUserID")int currentUserID, Pageable pageable);
-    @Query("SELECT u.following FROM User u WHERE u.id = :currentUserID AND u.username LIKE %:search%")
-    Page<User> findAllByFollowingAndUsernameContains(@Param("currentUserID") int currentUserID, @Param("search")String search, Pageable pageable);
+
+    @Query(
+        value="SELECT f FROM User u JOIN u.following f WHERE u.id = :currentUserID AND f.username LIKE %:search%",
+        countQuery = "SELECT COUNT(f) FROM User u JOIN u.following f WHERE u.id = :currentUserID"
+    )
+    Page<User> findAllFollowingUser(@Param("currentUserID") int currentUserID, @Param("search")String search, Pageable pageable);
 
     @Query("SELECT u FROM User u JOIN u.following f WHERE f.id = :currentUserID")
     Page<User> findFollowers(@Param("currentUserID") int currentUserID, Pageable pageable);

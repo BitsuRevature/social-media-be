@@ -8,7 +8,6 @@ import com.bitsu.social_media.repository.UserRepo;
 import com.bitsu.social_media.utility.Utility;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -105,7 +104,7 @@ public class UserService {
                     .size(usersPageable.getSize())
                     .build();
         }
-        var usersPageable = userRepo.findAllByFollowingAndUsernameContains(loggedInUser.getId(), search, pageable);
+        var usersPageable = userRepo.findAllFollowingUser(loggedInUser.getId(), search, pageable);
         return PagedUser.builder()
                 .users(usersPageable.getContent().stream().map(utility::mapToUserResponse).toList())
                 .hasNext(usersPageable.hasNext())
