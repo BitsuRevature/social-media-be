@@ -3,6 +3,7 @@ package com.bitsu.social_media.service;
 
 import com.bitsu.social_media.dto.FriendDTO;
 import com.bitsu.social_media.dto.FriendRequestDTO;
+import com.bitsu.social_media.dto.UserResponse;
 import com.bitsu.social_media.exception.AlreadyFriendsException;
 import com.bitsu.social_media.exception.FriendRequestExistsException;
 import com.bitsu.social_media.exception.NotFoundException;
@@ -135,20 +136,53 @@ public class FriendService {
     }
 
     // Get pending friend requests for the logged-in user
-    public List<FriendRequestDTO> getFriendRequests() {
+    public List<UserResponse> getFriendRequests() {
         User user = utility.getLoggedInUser();
+
         return friendRequestRepository.findByReceiverId(user.getId()).stream()
-                .filter(request -> request.getStatus() == FriendRequestStatus.PENDING)
                 .map(request -> {
                     User senderProfile = request.getSender();
-
-                    return FriendRequestDTO.builder()
-                            .requestId(request.getId())
-                            .Id(senderProfile.getId())
-                            .profilePicture(senderProfile.getProfilePicture())
+                    return UserResponse.builder()
                             .username(senderProfile.getUsername())
+                            .Id(senderProfile.getId())
+                            .bio(senderProfile.getBio())
+                            .profilePicture(senderProfile.getProfilePicture())
                             .build();
                 })
                 .toList();
+    }
+
+    public boolean isFriendRequest(int userId, FriendRequestStatus status) {
+        User user = utility.getLoggedInUser();
+
+        return friendRequestRepository.existsBySenderIdAndReceiverId(userId,user.getId(),status);
+    }
+
+    public void acceptFriendRequestConection(int userId) {
+        User user = utility.getLoggedInUser();
+
+        FriendRequest request = friendRequestRepository.findBySenderIdAndReceiverId(userId, user.getId())
+                .orElseThrow(() -> new RuntimeException("Friend request not found."));
+
+        request.setStatus(FriendRequestStatus.ACCEPTED);
+        log.info(request.toString());
+        friendRepository.save(Friend.builder()
+                .user(request.getReceiver())
+                .friend(request.getSender())
+                .build());
+        friendRepository.save(Friend.builder()
+                .friend(request.getReceiver())
+                .user(request.getSender())
+                .build());
+        friendRequestRepository.delete(request);
+    }
+
+
+    public void declineFriendRequestConection(int userId) {
+        User user = utility.getLoggedInUser();
+        FriendRequest request = friendRequestRepository.findBySenderIdAndReceiverId(userId, user.getId())
+                .orElseThrow(() -> new RuntimeException("Friend request not found."));
+        request.setStatus(FriendRequestStatus.DECLINED);
+        friendRequestRepository.delete(request);
     }
 }

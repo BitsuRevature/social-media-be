@@ -15,4 +15,5 @@ public class FriendRequestDTO {
     private int Id;
     private String username;
     private String profilePicture;
+    private String status;
 }
