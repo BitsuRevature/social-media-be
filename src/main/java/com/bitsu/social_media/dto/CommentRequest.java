@@ -18,6 +18,5 @@ public class CommentRequest {
     @Size(min = 1, max = 255, message = "Content must be between 1 and 255 characters")
     private String content;
 
-    @NotNull
     private int postId;
 }

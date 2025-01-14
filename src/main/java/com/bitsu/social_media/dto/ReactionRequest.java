@@ -13,10 +13,8 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ReactionRequest {
-    @NotNull
     @NotBlank
     private ReactionType type;
 
-    @NotNull
     private int postId;
 }
