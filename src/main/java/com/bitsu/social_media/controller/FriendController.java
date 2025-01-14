@@ -65,9 +65,9 @@ public class FriendController {
 
     // Get a list of friends
     @GetMapping
-    public ResponseEntity<List<FriendDTO>> getFriends() {
+    public ResponseEntity<List<UserResponse>> getFriends() {
         //log.info("Fetching friends list for the logged-in user");
-        List<FriendDTO> friends = friendService.getFriends();
+        List<UserResponse> friends = friendService.getFriends();
         return ResponseEntity.ok(friends);
     }
 
