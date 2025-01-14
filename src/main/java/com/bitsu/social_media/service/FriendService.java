@@ -158,6 +158,7 @@ public class FriendService {
         return friendRequestRepository.existsBySenderIdAndReceiverId(userId,user.getId(),status);
     }
 
+
     public void acceptFriendRequestConection(int userId) {
         User user = utility.getLoggedInUser();
 
@@ -184,5 +185,11 @@ public class FriendService {
                 .orElseThrow(() -> new RuntimeException("Friend request not found."));
         request.setStatus(FriendRequestStatus.DECLINED);
         friendRequestRepository.delete(request);
+    }
+
+    public boolean didISendAFriendRequest(int userId, FriendRequestStatus status) {
+        User user = utility.getLoggedInUser();
+
+        return friendRequestRepository.existsBySenderIdAndReceiverId(user.getId(), userId, status);
     }
 }

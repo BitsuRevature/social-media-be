@@ -1,4 +1,8 @@
 spring:
+  config:
+    import: env.properties
+    port: 8081
+
   application:
     name: social-media
 

@@ -87,6 +87,12 @@ public class FriendController {
         boolean isFriend = friendService.isFriendRequest(userId, status);
         return ResponseEntity.ok(isFriend);
     }
+    @GetMapping("/sent-friend-request/{userId}/{status}")
+    public ResponseEntity<Boolean> didISendAFriendRequest(@PathVariable int userId, @PathVariable FriendRequestStatus status) {
+        log.info("Checking friendship status with user ID: {}", userId);
+        boolean isFriend = friendService.didISendAFriendRequest(userId, status);
+        return ResponseEntity.ok(isFriend);
+    }
 
     // Get pending friend requests
     @GetMapping("/requests")
