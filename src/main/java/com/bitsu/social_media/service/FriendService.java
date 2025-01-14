@@ -115,16 +115,17 @@ public class FriendService {
     }
 
     // Get a list of friends for the logged-in user
-    public List<FriendDTO> getFriends() {
+    public List<UserResponse> getFriends() {
         User user = utility.getLoggedInUser();
-        return friendRepository.findByUserId(user.getId()).stream()
-                .map(friend -> FriendDTO.builder()
-                        .Id(friend.getId())
-                        .profilePicture(friend.getFriend().getProfilePicture())
-                        .username(friend.getFriend().getUsername())
-                        .firstname(friend.getFriend().getFirstname())
-                        .lastname(friend.getFriend().getLastname())
-                        .bio(friend.getFriend().getBio())
+        var friends = friendRepository.findByUserId(user.getId());
+
+        return friends.stream()
+                .map(friend -> userRepo.findById(friend.getFriend().getId()).orElseThrow(() -> new NotFoundException("User not found")))
+                .map(userProfile -> UserResponse.builder()
+                        .username(userProfile.getUsername())
+                        .Id(userProfile.getId())
+                        .bio(userProfile.getBio())
+                        .profilePicture(userProfile.getProfilePicture())
                         .build())
                 .toList();
     }
