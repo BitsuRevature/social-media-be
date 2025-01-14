@@ -28,7 +28,7 @@ public class FriendController {
     public ResponseEntity<Void> addFriend(
            @PathVariable int id
     ) {
-        log.info("Sending friend request to user with ID: {}", id);
+        //log.info("Sending friend request to user with ID: {}", id);
         friendService.addFriend(id);
         return ResponseEntity.ok().build();
     }
@@ -38,7 +38,7 @@ public class FriendController {
     public ResponseEntity<Void> acceptFriendRequest(
            @PathVariable int requestId
     ) {
-        log.info("Accepting friend request with ID: {}", requestId);
+        //log.info("Accepting friend request with ID: {}", requestId);
         friendService.acceptFriendRequest(requestId);
         return ResponseEntity.ok().build();
     }
@@ -48,7 +48,7 @@ public class FriendController {
     public ResponseEntity<Void> declineFriendRequest(
             @PathVariable int requestId
     ) {
-        log.info("Declining friend request with ID: {}", requestId);
+        //log.info("Declining friend request with ID: {}", requestId);
         friendService.declineFriendRequest(requestId);
         return ResponseEntity.ok().build();
     }
@@ -58,7 +58,7 @@ public class FriendController {
     public ResponseEntity<Void> unfriend(
             @PathVariable int id
     ) {
-        log.info("Unfriending user with ID: {}", id);
+        //log.info("Unfriending user with ID: {}", id);
         friendService.unfriend(id);
         return ResponseEntity.ok().build();
     }
@@ -66,7 +66,7 @@ public class FriendController {
     // Get a list of friends
     @GetMapping
     public ResponseEntity<List<FriendDTO>> getFriends() {
-        log.info("Fetching friends list for the logged-in user");
+        //log.info("Fetching friends list for the logged-in user");
         List<FriendDTO> friends = friendService.getFriends();
         return ResponseEntity.ok(friends);
     }
@@ -76,14 +76,14 @@ public class FriendController {
     public ResponseEntity<Boolean> isFriend(
             @PathVariable int userId
     ) {
-        log.info("Checking friendship status with user ID: {}", userId);
+        //log.info("Checking friendship status with user ID: {}", userId);
         boolean isFriend = friendService.isFriend(userId);
         return ResponseEntity.ok(isFriend);
     }
 
     @GetMapping("/is-friend-request/{userId}/{status}")
     public ResponseEntity<Boolean> isFriendRequest(@PathVariable int userId, @PathVariable FriendRequestStatus status) {
-        log.info("Checking friendship status with user ID: {}", userId);
+        //log.info("Checking friendship status with user ID: {}", userId);
         boolean isFriend = friendService.isFriendRequest(userId, status);
         return ResponseEntity.ok(isFriend);
     }
@@ -97,19 +97,19 @@ public class FriendController {
     // Get pending friend requests
     @GetMapping("/requests")
     public ResponseEntity<List<UserResponse>> getFriendRequests() {
-        log.info("Fetching pending friend requests for the logged-in user");
+        //log.info("Fetching pending friend requests for the logged-in user");
         List<UserResponse> friendRequests = friendService.getFriendRequests();
         return ResponseEntity.ok(friendRequests);
     }
     @PutMapping("/requests/accept/{requestId}")
     public ResponseEntity<Void> acceptFriendRequestConnection(@PathVariable int requestId) {
-        log.info("Accepting friend request with ID: {}", requestId);
+        //log.info("Accepting friend request with ID: {}", requestId);
         friendService.acceptFriendRequestConection(requestId);
         return ResponseEntity.ok().build();
     }
     @PutMapping("/requests/decline/{requestId}")
     public ResponseEntity<Void> declineFriendRequestConnection(@PathVariable int requestId) {
-        log.info("Accepting friend request with ID: {}", requestId);
+        //log.info("Accepting friend request with ID: {}", requestId);
         friendService.declineFriendRequestConection(requestId);
         return ResponseEntity.ok().build();
     }

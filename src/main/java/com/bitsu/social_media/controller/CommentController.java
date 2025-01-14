@@ -24,7 +24,7 @@ public class CommentController {
 
     @GetMapping
     public ResponseEntity<List<CommentResponse>> getComments() {
-        log.error("Get: ");
+        //log.error("Get: ");
         return ResponseEntity.ok(commentService.getComments());
     }
 
@@ -32,7 +32,7 @@ public class CommentController {
     public ResponseEntity<CommentResponse> createComment(
             @Valid @RequestBody CommentRequest commentRequest
     ) {
-        log.error("Create: " + commentRequest);
+        //log.error("Create: " + commentRequest);
         return ResponseEntity.ok(commentService.createComment(commentRequest));
     }
 
@@ -40,7 +40,7 @@ public class CommentController {
     public void deleteComment(
             @PathVariable int id
     ) {
-        log.error("Delete: " + id);
+        //log.error("Delete: " + id);
         commentService.deleteComment(id);
         ResponseEntity.ok();
     }
@@ -50,7 +50,7 @@ public class CommentController {
             @PathVariable int id,
             @Valid @RequestBody CommentRequest commentRequest
     ) {
-        log.error("Update: " + id + " " + commentRequest);
+        //log.error("Update: " + id + " " + commentRequest);
         return ResponseEntity.ok(commentService.updateComment(id, commentRequest));
     }
 }

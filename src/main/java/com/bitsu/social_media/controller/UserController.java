@@ -65,7 +65,7 @@ public class UserController {
     public void updatePI(
             @Valid @RequestBody UserPIInfo userPIInfo
     ) {
-        log.error("Update: " + userPIInfo);
+//        //log.error("Update: " + userPIInfo);
         userService.updatePI(userPIInfo);
         ResponseEntity.ok();
     }
@@ -74,7 +74,7 @@ public class UserController {
     public void updateBio(
             @Valid @RequestBody UserBioInfo userBioInfo
     ) {
-        log.error("Update: " + userBioInfo);
+        //log.error("Update: " + userBioInfo);
         userService.updateBio(userBioInfo);
         ResponseEntity.ok();
     }
@@ -83,7 +83,7 @@ public class UserController {
     public void updateProfilePic(
             @Valid @RequestBody UserProfilePic userProfilePic
     ) {
-        log.error("Update: " + userProfilePic);
+        //log.error("Update: " + userProfilePic);
         userService.updateProfilePic(userProfilePic);
         ResponseEntity.ok();
     }
