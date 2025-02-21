@@ -63,7 +63,6 @@ public class User implements UserDetails {
 
     @ManyToMany
     private List<User> following;
-
     @Enumerated(EnumType.STRING)
     private Role role;
 

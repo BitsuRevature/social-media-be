@@ -64,4 +64,10 @@ public class CommentService {
         comment = commentRepo.save(comment);
         return utility.mapToCommentResponse(comment);
     }
+
+    public CommentResponse getComment(int id) {
+        var comment = commentRepo.findById(id)
+                .orElseThrow(() -> new NotFoundException("Comment not found"));
+        return utility.mapToCommentResponse(comment);
+    }
 }
