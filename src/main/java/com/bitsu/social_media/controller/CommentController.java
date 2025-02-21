@@ -28,6 +28,14 @@ public class CommentController {
         return ResponseEntity.ok(commentService.getComments());
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<CommentResponse> getComment(
+            @PathVariable int id
+    ) {
+        //log.error("Get: " + id);
+        return ResponseEntity.ok(commentService.getComment(id));
+    }
+
     @PostMapping
     public ResponseEntity<CommentResponse> createComment(
             @Valid @RequestBody CommentRequest commentRequest
